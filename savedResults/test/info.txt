@@ -1,0 +1,12 @@
+This is the information file containing the hyperparameters
+Number of Epochs: 5 
+Learning Rate: 0.005000 
+Number of features in the hidden state: 128 
+Number of points that go into encoder: 9 
+The model is a sequence 2 sequence RNN, trained using the MSE Loss function, 
+ SGD Optimizer.
+The range of sequence lengths is:
+10
+The range of standard deviations squared of the weight init is:
+0.001000
+Code written by Sarang Mittal (Caltech), using the Pytorch API
