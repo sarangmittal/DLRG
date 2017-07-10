@@ -1,5 +1,5 @@
 *****************************************************************************
-Starting Model with nPoints = 40 and weight standard deviation squared = 0.020
+Starting Model with nPoints = 40 and weight standard deviation  = 0.020
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.06247 and validation loss 0.0001665
 1m 9s
@@ -103,10 +103,10 @@ Finished epoch [50 / 50]  with training loss 5.452e-07 and validation loss 5.414
 56m 44s
 ************  Test Error is 5.506e-07   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 40 and weight standard deviation squared = 0.020
+Finished Model with nPoints = 40 and weight standard deviation  = 0.020
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 40 and weight standard deviation squared = 0.040
+Starting Model with nPoints = 40 and weight standard deviation  = 0.040
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.06868 and validation loss 0.0001842
 1m 3s
@@ -210,10 +210,10 @@ Finished epoch [50 / 50]  with training loss 7.519e-07 and validation loss 6.274
 54m 58s
 ************  Test Error is 6.563e-07   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 40 and weight standard deviation squared = 0.040
+Finished Model with nPoints = 40 and weight standard deviation  = 0.040
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 40 and weight standard deviation squared = 0.060
+Starting Model with nPoints = 40 and weight standard deviation  = 0.060
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.04958 and validation loss 0.0004177
 1m 3s
@@ -317,10 +317,10 @@ Finished epoch [50 / 50]  with training loss 2.229e-06 and validation loss 1.869
 53m 43s
 ************  Test Error is 1.89e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 40 and weight standard deviation squared = 0.060
+Finished Model with nPoints = 40 and weight standard deviation  = 0.060
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 40 and weight standard deviation squared = 0.080
+Starting Model with nPoints = 40 and weight standard deviation  = 0.080
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.00708 and validation loss 0.0001223
 1m 4s
@@ -424,10 +424,10 @@ Finished epoch [50 / 50]  with training loss 1.095e-06 and validation loss 1.089
 54m 54s
 ************  Test Error is 1.115e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 40 and weight standard deviation squared = 0.080
+Finished Model with nPoints = 40 and weight standard deviation  = 0.080
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 40 and weight standard deviation squared = 0.100
+Starting Model with nPoints = 40 and weight standard deviation  = 0.100
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss nan and validation loss nan
 1m 7s
@@ -531,10 +531,10 @@ Finished epoch [50 / 50]  with training loss nan and validation loss nan
 55m 33s
 ************  Test Error is nan   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 40 and weight standard deviation squared = 0.100
+Finished Model with nPoints = 40 and weight standard deviation  = 0.100
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 50 and weight standard deviation squared = 0.020
+Starting Model with nPoints = 50 and weight standard deviation  = 0.020
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.162 and validation loss 0.1572
 1m 22s
@@ -638,10 +638,10 @@ Finished epoch [50 / 50]  with training loss 6.138e-07 and validation loss 5.901
 70m 21s
 ************  Test Error is 5.902e-07   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 50 and weight standard deviation squared = 0.020
+Finished Model with nPoints = 50 and weight standard deviation  = 0.020
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 50 and weight standard deviation squared = 0.040
+Starting Model with nPoints = 50 and weight standard deviation  = 0.040
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.07594 and validation loss 0.0004495
 1m 22s
@@ -745,10 +745,10 @@ Finished epoch [50 / 50]  with training loss 3.375e-06 and validation loss 3.329
 68m 31s
 ************  Test Error is 3.364e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 50 and weight standard deviation squared = 0.040
+Finished Model with nPoints = 50 and weight standard deviation  = 0.040
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 50 and weight standard deviation squared = 0.060
+Starting Model with nPoints = 50 and weight standard deviation  = 0.060
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.07528 and validation loss 0.0008684
 1m 22s
@@ -852,10 +852,10 @@ Finished epoch [50 / 50]  with training loss 3.251e-06 and validation loss 3.107
 69m 18s
 ************  Test Error is 3.21e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 50 and weight standard deviation squared = 0.060
+Finished Model with nPoints = 50 and weight standard deviation  = 0.060
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 50 and weight standard deviation squared = 0.080
+Starting Model with nPoints = 50 and weight standard deviation  = 0.080
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.05795 and validation loss 0.0006747
 1m 26s
@@ -959,10 +959,10 @@ Finished epoch [50 / 50]  with training loss 2.158e-06 and validation loss 2.131
 69m 4s
 ************  Test Error is 2.243e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 50 and weight standard deviation squared = 0.080
+Finished Model with nPoints = 50 and weight standard deviation  = 0.080
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 50 and weight standard deviation squared = 0.100
+Starting Model with nPoints = 50 and weight standard deviation  = 0.100
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss nan and validation loss nan
 1m 22s
@@ -1066,10 +1066,10 @@ Finished epoch [50 / 50]  with training loss nan and validation loss nan
 69m 18s
 ************  Test Error is nan   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 50 and weight standard deviation squared = 0.100
+Finished Model with nPoints = 50 and weight standard deviation  = 0.100
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 60 and weight standard deviation squared = 0.020
+Starting Model with nPoints = 60 and weight standard deviation  = 0.020
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.1179 and validation loss 0.007046
 1m 41s
@@ -1173,10 +1173,10 @@ Finished epoch [50 / 50]  with training loss 1.601e-06 and validation loss 1.57e
 82m 51s
 ************  Test Error is 1.643e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 60 and weight standard deviation squared = 0.020
+Finished Model with nPoints = 60 and weight standard deviation  = 0.020
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 60 and weight standard deviation squared = 0.040
+Starting Model with nPoints = 60 and weight standard deviation  = 0.040
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.07088 and validation loss 0.001622
 1m 38s
@@ -1280,10 +1280,10 @@ Finished epoch [50 / 50]  with training loss 1.077e-05 and validation loss 2.382
 82m 5s
 ************  Test Error is 2.506e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 60 and weight standard deviation squared = 0.040
+Finished Model with nPoints = 60 and weight standard deviation  = 0.040
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 60 and weight standard deviation squared = 0.060
+Starting Model with nPoints = 60 and weight standard deviation  = 0.060
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.04777 and validation loss 0.0004398
 1m 38s
@@ -1387,10 +1387,10 @@ Finished epoch [50 / 50]  with training loss 2.031e-06 and validation loss 1.948
 82m 22s
 ************  Test Error is 1.982e-06   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 60 and weight standard deviation squared = 0.060
+Finished Model with nPoints = 60 and weight standard deviation  = 0.060
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 60 and weight standard deviation squared = 0.080
+Starting Model with nPoints = 60 and weight standard deviation  = 0.080
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss 0.01125 and validation loss 0.0002165
 1m 38s
@@ -1494,10 +1494,10 @@ Finished epoch [50 / 50]  with training loss 2.162e-07 and validation loss 2.089
 83m 14s
 ************  Test Error is 2.065e-07   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 60 and weight standard deviation squared = 0.080
+Finished Model with nPoints = 60 and weight standard deviation  = 0.080
 *****************************************************************************
 *****************************************************************************
-Starting Model with nPoints = 60 and weight standard deviation squared = 0.100
+Starting Model with nPoints = 60 and weight standard deviation  = 0.100
 *****************************************************************************
 Finished epoch [1 / 50]  with training loss nan and validation loss nan
 1m 38s
@@ -1601,5 +1601,5 @@ Finished epoch [50 / 50]  with training loss nan and validation loss nan
 83m 2s
 ************  Test Error is nan   ******************************************
 *****************************************************************************
-Finished Model with nPoints = 60 and weight standard deviation squared = 0.100
+Finished Model with nPoints = 60 and weight standard deviation  = 0.100
 *****************************************************************************

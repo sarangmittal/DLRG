@@ -1,0 +1,54 @@
+*****************************************************************************
+Starting Model with nPoints = 50 and weight standard deviation = 0.01
+*****************************************************************************
+Finished epoch [1 / 50]  with training loss 0.03734 and validation loss 0.03555
+348m 26s
+Finished epoch [2 / 50]  with training loss 0.03521 and validation loss 0.03327
+352m 17s
+Finished epoch [3 / 50]  with training loss 0.03373 and validation loss 0.03243
+356m 5s
+Finished epoch [4 / 50]  with training loss 0.03303 and validation loss 0.03206
+360m 14s
+Finished epoch [5 / 50]  with training loss 0.03241 and validation loss 0.03154
+364m 5s
+Finished epoch [6 / 50]  with training loss 0.03173 and validation loss 0.03074
+368m 9s
+Finished epoch [7 / 50]  with training loss 0.03071 and validation loss 0.02929
+372m 2s
+Finished epoch [8 / 50]  with training loss 0.02925 and validation loss 0.02716
+376m 3s
+Finished epoch [9 / 50]  with training loss 0.02371 and validation loss 0.01967
+379m 53s
+Finished epoch [10 / 50]  with training loss 0.02061 and validation loss 0.01889
+383m 40s
+Finished epoch [11 / 50]  with training loss 0.01931 and validation loss 0.01793
+387m 37s
+Finished epoch [12 / 50]  with training loss 0.01593 and validation loss 0.01268
+391m 39s
+Finished epoch [13 / 50]  with training loss 0.01381 and validation loss 0.01608
+395m 30s
+Finished epoch [14 / 50]  with training loss 0.01324 and validation loss 0.02626
+399m 32s
+Finished epoch [15 / 50]  with training loss 0.01403 and validation loss 0.01057
+403m 26s
+Finished epoch [16 / 50]  with training loss 0.009054 and validation loss 0.01002
+407m 18s
+Finished epoch [17 / 50]  with training loss 0.008935 and validation loss 0.006086
+411m 0s
+Finished epoch [18 / 50]  with training loss 0.008796 and validation loss 0.005286
+414m 43s
+Finished epoch [19 / 50]  with training loss 0.03358 and validation loss 0.03127
+418m 29s
+Finished epoch [20 / 50]  with training loss 0.02973 and validation loss 0.02621
+422m 8s
+Finished epoch [21 / 50]  with training loss 0.02249 and validation loss 0.03191
+425m 41s
+Finished epoch [22 / 50]  with training loss 0.01731 and validation loss 0.0122
+429m 7s
+Finished epoch [23 / 50]  with training loss nan and validation loss nan
+432m 45s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+*****************************************************************************
+Finished Model with nPoints = 50 and weight standard deviation = 0.01
+*****************************************************************************

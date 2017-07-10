@@ -1,0 +1,107 @@
+*****************************************************************************
+Starting Model with nPoints = 40 and weight standard deviation  = 0.0085
+*****************************************************************************
+Finished epoch [1 / 50]  with training loss 0.04243 and validation loss 0.04215
+73m 53s
+Finished epoch [2 / 50]  with training loss 0.04032 and validation loss 0.04139
+75m 37s
+Finished epoch [3 / 50]  with training loss 0.03956 and validation loss 0.0406
+77m 13s
+Finished epoch [4 / 50]  with training loss 0.0389 and validation loss 0.04
+78m 49s
+Finished epoch [5 / 50]  with training loss 0.0384 and validation loss 0.03952
+80m 27s
+Finished epoch [6 / 50]  with training loss 0.03797 and validation loss 0.03908
+82m 2s
+Finished epoch [7 / 50]  with training loss 0.03757 and validation loss 0.03867
+83m 44s
+Finished epoch [8 / 50]  with training loss 0.03719 and validation loss 0.03829
+85m 24s
+Finished epoch [9 / 50]  with training loss 0.03684 and validation loss 0.03792
+87m 2s
+Finished epoch [10 / 50]  with training loss 0.03652 and validation loss 0.03759
+88m 40s
+Finished epoch [11 / 50]  with training loss 0.03623 and validation loss 0.0373
+90m 22s
+Finished epoch [12 / 50]  with training loss 0.036 and validation loss 0.03705
+92m 8s
+Finished epoch [13 / 50]  with training loss 0.03581 and validation loss 0.03685
+93m 55s
+Finished epoch [14 / 50]  with training loss 0.03565 and validation loss 0.03667
+95m 41s
+Finished epoch [15 / 50]  with training loss 0.03552 and validation loss 0.03649
+97m 16s
+Finished epoch [16 / 50]  with training loss 0.03538 and validation loss 0.0363
+98m 49s
+Finished epoch [17 / 50]  with training loss 0.03524 and validation loss 0.03611
+100m 25s
+Finished epoch [18 / 50]  with training loss 0.03509 and validation loss 0.03589
+102m 3s
+Finished epoch [19 / 50]  with training loss 0.03492 and validation loss 0.03564
+103m 43s
+Finished epoch [20 / 50]  with training loss 0.03473 and validation loss 0.03536
+105m 37s
+Finished epoch [21 / 50]  with training loss 0.03451 and validation loss 0.03504
+107m 11s
+Finished epoch [22 / 50]  with training loss 0.03425 and validation loss 0.03465
+108m 50s
+Finished epoch [23 / 50]  with training loss 0.03394 and validation loss 0.03418
+110m 31s
+Finished epoch [24 / 50]  with training loss 0.03354 and validation loss 0.03356
+112m 6s
+Finished epoch [25 / 50]  with training loss 0.03298 and validation loss 0.0327
+113m 46s
+Finished epoch [26 / 50]  with training loss 0.03211 and validation loss 0.03139
+115m 31s
+Finished epoch [27 / 50]  with training loss 0.03057 and validation loss 0.02914
+117m 13s
+Finished epoch [28 / 50]  with training loss 0.02773 and validation loss 0.02586
+118m 59s
+Finished epoch [29 / 50]  with training loss 0.02437 and validation loss 0.02303
+120m 36s
+Finished epoch [30 / 50]  with training loss 0.02218 and validation loss 0.02125
+122m 17s
+Finished epoch [31 / 50]  with training loss 0.02102 and validation loss 0.02042
+123m 54s
+Finished epoch [32 / 50]  with training loss 0.02044 and validation loss 0.02
+125m 40s
+Finished epoch [33 / 50]  with training loss 0.0201 and validation loss 0.01975
+127m 23s
+Finished epoch [34 / 50]  with training loss 0.01986 and validation loss 0.01958
+129m 0s
+Finished epoch [35 / 50]  with training loss 0.01968 and validation loss 0.01945
+130m 42s
+Finished epoch [36 / 50]  with training loss 0.01953 and validation loss 0.01935
+132m 25s
+Finished epoch [37 / 50]  with training loss 0.01939 and validation loss 0.01927
+134m 3s
+Finished epoch [38 / 50]  with training loss 0.01926 and validation loss 0.01918
+135m 43s
+Finished epoch [39 / 50]  with training loss 0.01913 and validation loss 0.01909
+137m 26s
+Finished epoch [40 / 50]  with training loss 0.019 and validation loss 0.01899
+139m 5s
+Finished epoch [41 / 50]  with training loss 0.01883 and validation loss 0.01885
+140m 44s
+Finished epoch [42 / 50]  with training loss 0.01863 and validation loss 0.01865
+142m 35s
+Finished epoch [43 / 50]  with training loss 0.01832 and validation loss 0.01829
+144m 21s
+Finished epoch [44 / 50]  with training loss 0.01771 and validation loss 0.01732
+146m 2s
+Finished epoch [45 / 50]  with training loss 0.01608 and validation loss 0.01559
+147m 44s
+Finished epoch [46 / 50]  with training loss 0.01537 and validation loss 0.0155
+149m 30s
+Finished epoch [47 / 50]  with training loss 0.01521 and validation loss 0.01543
+151m 16s
+Finished epoch [48 / 50]  with training loss 0.01508 and validation loss 0.01536
+152m 57s
+Finished epoch [49 / 50]  with training loss 0.01497 and validation loss 0.01529
+154m 40s
+Finished epoch [50 / 50]  with training loss 0.01487 and validation loss 0.01521
+156m 26s
+************  Train Error is 0.01487   ******************************************
+*****************************************************************************
+Finished Model with nPoints = 40 and weight standard deviation  = 0.009
+*****************************************************************************

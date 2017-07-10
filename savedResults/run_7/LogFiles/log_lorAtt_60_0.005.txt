@@ -1,0 +1,42 @@
+*****************************************************************************
+Starting Model with nPoints = 60 and weight standard deviation = 0.005
+*****************************************************************************
+Finished epoch [1 / 50]  with training loss 0.03457 and validation loss 0.03313
+546m 22s
+Finished epoch [2 / 50]  with training loss 0.03299 and validation loss 0.03132
+550m 40s
+Finished epoch [3 / 50]  with training loss 0.03147 and validation loss 0.03008
+555m 17s
+Finished epoch [4 / 50]  with training loss 0.03078 and validation loss 0.02956
+559m 51s
+Finished epoch [5 / 50]  with training loss 0.03012 and validation loss 0.02892
+564m 21s
+Finished epoch [6 / 50]  with training loss 0.02936 and validation loss 0.02813
+568m 46s
+Finished epoch [7 / 50]  with training loss 0.0286 and validation loss 0.02707
+573m 17s
+Finished epoch [8 / 50]  with training loss 0.02797 and validation loss 0.02644
+577m 40s
+Finished epoch [9 / 50]  with training loss 0.02743 and validation loss 0.02581
+582m 2s
+Finished epoch [10 / 50]  with training loss 0.02673 and validation loss 0.02516
+586m 37s
+Finished epoch [11 / 50]  with training loss 0.02461 and validation loss 0.02138
+591m 16s
+Finished epoch [12 / 50]  with training loss 0.02534 and validation loss 0.02967
+595m 33s
+Finished epoch [13 / 50]  with training loss 0.0284 and validation loss 0.02607
+599m 12s
+Finished epoch [14 / 50]  with training loss 0.02435 and validation loss 0.01967
+602m 28s
+Finished epoch [15 / 50]  with training loss 0.02226 and validation loss 0.01845
+606m 39s
+Finished epoch [16 / 50]  with training loss 0.01999 and validation loss 0.01979
+611m 33s
+Finished epoch [17 / 50]  with training loss nan and validation loss nan
+616m 28s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+*****************************************************************************
+Finished Model with nPoints = 60 and weight standard deviation = 0.005
+*****************************************************************************

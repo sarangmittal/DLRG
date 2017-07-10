@@ -1,0 +1,208 @@
+*****************************************************************************
+Starting Model with nPoints = 60 and weight standard deviation = 0.09
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.02939 and validation loss 0.02612
+3258m 39s
+Finished epoch [2 / 100]  with training loss 0.02361 and validation loss 0.02088
+3264m 51s
+Finished epoch [3 / 100]  with training loss 0.01942 and validation loss 0.01788
+3271m 17s
+Finished epoch [4 / 100]  with training loss 0.01458 and validation loss 0.01445
+3275m 37s
+Finished epoch [5 / 100]  with training loss 0.01116 and validation loss 0.008029
+3278m 58s
+Finished epoch [6 / 100]  with training loss 0.009072 and validation loss 0.0086
+3282m 20s
+Finished epoch [7 / 100]  with training loss 0.007786 and validation loss 0.006097
+3285m 38s
+Finished epoch [8 / 100]  with training loss 0.006852 and validation loss 0.005398
+3289m 2s
+Finished epoch [9 / 100]  with training loss 0.006206 and validation loss 0.005214
+3292m 39s
+Finished epoch [10 / 100]  with training loss 0.005737 and validation loss 0.004227
+3296m 32s
+Finished epoch [11 / 100]  with training loss 0.005171 and validation loss 0.00385
+3300m 30s
+Finished epoch [12 / 100]  with training loss 0.004681 and validation loss 0.003762
+3304m 9s
+Finished epoch [13 / 100]  with training loss 0.004297 and validation loss 0.003566
+3307m 55s
+Finished epoch [14 / 100]  with training loss 0.003803 and validation loss 0.003035
+3311m 38s
+Finished epoch [15 / 100]  with training loss 0.003611 and validation loss 0.003125
+3315m 26s
+Finished epoch [16 / 100]  with training loss 0.003427 and validation loss 0.004261
+3318m 45s
+Finished epoch [17 / 100]  with training loss 0.003191 and validation loss 0.004289
+3322m 19s
+Finished epoch [18 / 100]  with training loss 0.003002 and validation loss 0.003224
+3325m 40s
+Finished epoch [19 / 100]  with training loss 0.002909 and validation loss 0.004181
+3329m 2s
+Finished epoch [20 / 100]  with training loss 0.002905 and validation loss 0.00361
+3332m 33s
+Finished epoch [21 / 100]  with training loss 0.002719 and validation loss 0.003051
+3336m 13s
+Finished epoch [22 / 100]  with training loss 0.002526 and validation loss 0.003261
+3339m 30s
+Finished epoch [23 / 100]  with training loss 0.002625 and validation loss 0.004971
+3343m 6s
+Finished epoch [24 / 100]  with training loss 0.002303 and validation loss 0.003061
+3346m 39s
+Finished epoch [25 / 100]  with training loss 0.002286 and validation loss 0.00264
+3349m 47s
+Finished epoch [26 / 100]  with training loss 0.002287 and validation loss 0.002293
+3353m 23s
+Finished epoch [27 / 100]  with training loss 0.002272 and validation loss 0.00207
+3357m 11s
+Finished epoch [28 / 100]  with training loss 0.002061 and validation loss 0.001781
+3360m 36s
+Finished epoch [29 / 100]  with training loss 0.002117 and validation loss 0.00221
+3364m 2s
+Finished epoch [30 / 100]  with training loss 0.00189 and validation loss 0.002014
+3367m 42s
+Finished epoch [31 / 100]  with training loss 0.002096 and validation loss 0.001642
+3371m 21s
+Finished epoch [32 / 100]  with training loss 0.002008 and validation loss 0.002056
+3375m 0s
+Finished epoch [33 / 100]  with training loss 0.001796 and validation loss 0.001074
+3378m 33s
+Finished epoch [34 / 100]  with training loss 0.001797 and validation loss 0.001109
+3381m 55s
+Finished epoch [35 / 100]  with training loss 0.001664 and validation loss 0.0009889
+3385m 27s
+Finished epoch [36 / 100]  with training loss 0.001844 and validation loss 0.0009852
+3389m 10s
+Finished epoch [37 / 100]  with training loss 0.00173 and validation loss 0.001711
+3392m 50s
+Finished epoch [38 / 100]  with training loss 0.001581 and validation loss 0.001001
+3396m 23s
+Finished epoch [39 / 100]  with training loss 0.001449 and validation loss 0.0008531
+3399m 41s
+Finished epoch [40 / 100]  with training loss 0.001621 and validation loss 0.0008059
+3403m 5s
+Finished epoch [41 / 100]  with training loss 0.001534 and validation loss 0.000855
+3406m 32s
+Finished epoch [42 / 100]  with training loss 0.001473 and validation loss 0.000752
+3410m 9s
+Finished epoch [43 / 100]  with training loss 0.001565 and validation loss 0.0007582
+3413m 36s
+Finished epoch [44 / 100]  with training loss 0.001308 and validation loss 0.0007348
+3417m 4s
+Finished epoch [45 / 100]  with training loss 0.001391 and validation loss 0.001077
+3420m 36s
+Finished epoch [46 / 100]  with training loss 0.001378 and validation loss 0.0008092
+3423m 57s
+Finished epoch [47 / 100]  with training loss 0.001281 and validation loss 0.0008857
+3427m 25s
+Finished epoch [48 / 100]  with training loss 0.001242 and validation loss 0.0006669
+3430m 54s
+Finished epoch [49 / 100]  with training loss 0.001398 and validation loss 0.0008125
+3434m 24s
+Finished epoch [50 / 100]  with training loss 0.001188 and validation loss 0.0008404
+3437m 58s
+Finished epoch [51 / 100]  with training loss 0.001186 and validation loss 0.0007307
+3441m 21s
+Finished epoch [52 / 100]  with training loss 0.001108 and validation loss 0.0005947
+3444m 49s
+Finished epoch [53 / 100]  with training loss 0.001146 and validation loss 0.0006282
+3448m 19s
+Finished epoch [54 / 100]  with training loss 0.00112 and validation loss 0.000606
+3451m 40s
+Finished epoch [55 / 100]  with training loss 0.001046 and validation loss 0.0006152
+3455m 13s
+Finished epoch [56 / 100]  with training loss 0.001029 and validation loss 0.0005829
+3458m 43s
+Finished epoch [57 / 100]  with training loss 0.0009379 and validation loss 0.000546
+3462m 14s
+Finished epoch [58 / 100]  with training loss 0.001041 and validation loss 0.0005993
+3465m 43s
+Finished epoch [59 / 100]  with training loss 0.0009058 and validation loss 0.0005698
+3468m 59s
+Finished epoch [60 / 100]  with training loss 0.0009454 and validation loss 0.0005167
+3472m 28s
+Finished epoch [61 / 100]  with training loss 0.0009041 and validation loss 0.0005202
+3475m 50s
+Finished epoch [62 / 100]  with training loss 0.001077 and validation loss 0.0005375
+3479m 19s
+Finished epoch [63 / 100]  with training loss 0.0009362 and validation loss 0.0005142
+3482m 39s
+Finished epoch [64 / 100]  with training loss 0.0008198 and validation loss 0.0004848
+3487m 16s
+Finished epoch [65 / 100]  with training loss 0.0009879 and validation loss 0.0005097
+3492m 11s
+Finished epoch [66 / 100]  with training loss 0.0009287 and validation loss 0.0004558
+3497m 7s
+Finished epoch [67 / 100]  with training loss 0.0008501 and validation loss 0.0004696
+3502m 1s
+Finished epoch [68 / 100]  with training loss 0.0008876 and validation loss 0.0004904
+3506m 58s
+Finished epoch [69 / 100]  with training loss 0.0007612 and validation loss 0.0004389
+3511m 53s
+Finished epoch [70 / 100]  with training loss 0.0008286 and validation loss 0.0004357
+3516m 48s
+Finished epoch [71 / 100]  with training loss 0.000802 and validation loss 0.000561
+3521m 44s
+Finished epoch [72 / 100]  with training loss 0.0008686 and validation loss 0.0005317
+3526m 42s
+Finished epoch [73 / 100]  with training loss 0.000841 and validation loss 0.0004581
+3531m 37s
+Finished epoch [74 / 100]  with training loss 0.0008624 and validation loss 0.0005046
+3536m 30s
+Finished epoch [75 / 100]  with training loss 0.0006943 and validation loss 0.0004429
+3541m 26s
+Finished epoch [76 / 100]  with training loss 0.0008306 and validation loss 0.0004133
+3546m 22s
+Finished epoch [77 / 100]  with training loss 0.0007378 and validation loss 0.0004057
+3551m 16s
+Finished epoch [78 / 100]  with training loss 0.0007767 and validation loss 0.0004401
+3556m 11s
+Finished epoch [79 / 100]  with training loss 0.0006785 and validation loss 0.0004023
+3561m 5s
+Finished epoch [80 / 100]  with training loss 0.0008081 and validation loss 0.0004101
+3565m 58s
+Finished epoch [81 / 100]  with training loss 0.0007009 and validation loss 0.0004559
+3570m 51s
+Finished epoch [82 / 100]  with training loss 0.0007817 and validation loss 0.0004112
+3575m 44s
+Finished epoch [83 / 100]  with training loss 0.0007124 and validation loss 0.0004136
+3580m 36s
+Finished epoch [84 / 100]  with training loss 0.0007223 and validation loss 0.000385
+3585m 29s
+Finished epoch [85 / 100]  with training loss 0.0007184 and validation loss 0.0004337
+3590m 22s
+Finished epoch [86 / 100]  with training loss 0.0007261 and validation loss 0.0003763
+3595m 14s
+Finished epoch [87 / 100]  with training loss 0.0008386 and validation loss 0.0004454
+3600m 7s
+Finished epoch [88 / 100]  with training loss 0.0006979 and validation loss 0.0003868
+3604m 59s
+Finished epoch [89 / 100]  with training loss 0.0006524 and validation loss 0.0004775
+3609m 52s
+Finished epoch [90 / 100]  with training loss 0.0007042 and validation loss 0.000372
+3614m 45s
+Finished epoch [91 / 100]  with training loss 0.0006649 and validation loss 0.0004401
+3619m 37s
+Finished epoch [92 / 100]  with training loss 0.0007617 and validation loss 0.0004857
+3624m 29s
+Finished epoch [93 / 100]  with training loss 0.0005952 and validation loss 0.0003949
+3629m 22s
+Finished epoch [94 / 100]  with training loss 0.0005403 and validation loss 0.0003824
+3634m 14s
+Finished epoch [95 / 100]  with training loss 0.0006044 and validation loss 0.0003826
+3639m 7s
+Finished epoch [96 / 100]  with training loss 0.0006939 and validation loss 0.0003749
+3643m 59s
+Finished epoch [97 / 100]  with training loss 0.0006493 and validation loss 0.000362
+3648m 52s
+Finished epoch [98 / 100]  with training loss 0.00057 and validation loss 0.0003617
+3653m 47s
+Finished epoch [99 / 100]  with training loss 0.0005928 and validation loss 0.0003432
+3658m 39s
+Finished epoch [100 / 100]  with training loss 0.0006527 and validation loss 0.0003783
+3663m 31s
+************  Train Error is 0.0006527   ******************************************
+************  Test Error is 0.2757 *********************************************
+*****************************************************************************
+Finished Model with nPoints = 60 and weight standard deviation = 0.09
+*****************************************************************************
