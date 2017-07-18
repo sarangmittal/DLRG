@@ -1,0 +1,47 @@
+*****************************************************************************
+Starting Model with nPoints = 100 and weight standard deviation = 0.09
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.03108 and validation loss 0.02729
+1971m 10s
+Finished epoch [2 / 100]  with training loss 0.02672 and validation loss 0.02502
+1978m 37s
+Finished epoch [3 / 100]  with training loss 0.02503 and validation loss 0.02348
+1986m 2s
+Finished epoch [4 / 100]  with training loss 0.02406 and validation loss 0.02284
+1993m 45s
+Finished epoch [5 / 100]  with training loss 0.02354 and validation loss 0.02232
+2001m 32s
+Finished epoch [6 / 100]  with training loss 0.02304 and validation loss 0.02181
+2009m 25s
+Finished epoch [7 / 100]  with training loss 0.02523 and validation loss 0.02925
+2016m 59s
+Finished epoch [8 / 100]  with training loss 0.0253 and validation loss 0.02195
+2024m 15s
+Finished epoch [9 / 100]  with training loss 0.02201 and validation loss 0.02291
+2031m 52s
+Finished epoch [10 / 100]  with training loss 0.02232 and validation loss 0.02074
+2039m 43s
+Finished epoch [11 / 100]  with training loss 0.02172 and validation loss 0.01942
+2047m 32s
+Finished epoch [12 / 100]  with training loss 0.02595 and validation loss 0.02719
+2055m 31s
+Finished epoch [13 / 100]  with training loss 0.02398 and validation loss 0.02121
+2063m 22s
+Finished epoch [14 / 100]  with training loss 0.02162 and validation loss 0.02069
+2071m 6s
+Finished epoch [15 / 100]  with training loss 0.02063 and validation loss 0.01895
+2079m 5s
+Finished epoch [16 / 100]  with training loss 0.01995 and validation loss 0.01989
+2086m 45s
+Finished epoch [17 / 100]  with training loss 0.02254 and validation loss 0.02653
+2094m 16s
+Finished epoch [18 / 100]  with training loss 0.02141 and validation loss 0.02071
+2101m 46s
+Finished epoch [19 / 100]  with training loss nan and validation loss nan
+2109m 13s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 100 and weight standard deviation = 0.09
+*****************************************************************************

@@ -9,6 +9,7 @@ import time
 
 parser = argparse.ArgumentParser(description='Hyperparameters for RNN training')
 parser.add_argument('--epochs', type=int, default=50, help='Maximum number of epochs')
+parser.add_argument('--customLR', type=bool, default=False, help='Whether or not to use pre-tuned learning rates based on model size')
 parser.add_argument('--lr', type=float, default=0.01, help='Learning Rate')
 parser.add_argument('--nhid', type=int, default=128, help='Number of hidden features')
 parser.add_argument('--isl', type=int, default=9, help='Number of points to use in training. npoints-isl is the number of points to predict')
@@ -18,8 +19,8 @@ args = parser.parse_args()
 
 # nPoints = [10]
 # wsd = [0.01,0.02]
-nPoints = [20,30,40,50,60,80,100]
-wsd = [0.01, 0.02, 0.03, 0.04, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+nPoints = [60]
+wsd = [0.01]
 
 # Create directories to save to if they don't exist:
 def createDir(path):
@@ -39,7 +40,11 @@ with open('%s/info.txt' % args.save, 'w') as f:
     f.write('This is the information file containing the hyperparameters\n')
     f.write('Number of Epochs: %d \n' % args.epochs)
     # f.write('Learning Rate: %f \n' % args.lr)
-    f.write('Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40\n')
+    if args.customLR:
+        f.write('Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40 and 0.005 for sequences > 60 \n')
+    else:
+        f.write('Learning Rate: %f \n' % args.lr)
+
     f.write('Number of features in the hidden state: %d \n' % args.nhid)
     f.write('Number of points that go into encoder: %d \n' % args.isl)
     f.write('The model is a sequence 2 sequence RNN, trained using the MSE Loss function, \n SGD Optimizer.\n')
@@ -65,12 +70,15 @@ for n in range(len(nPoints)):
     print("Starting models with %d points" % nPoints[n])
     allTrainError[n + 1][0] = nPoints[n]
     allTestError[n + 1][0] = nPoints[n]
-    if nPoints[n] <= 40:
-        args.lr = 0.05
-    else:
-        args.lr = 0.01
+    if args.customLR:
+        if nPoints[n] <= 40:
+            args.lr = 0.05
+        elif nPoints[n] <= 60:
+            args.lr = 0.01
+        elif nPoints[n] > 60:
+            args.lr = 0.005
     print(args.lr)
-    nWorkers = min(8, len(wsd))
+    nWorkers = min(5, len(wsd))
     pool = mp.Pool(nWorkers) 
     temp = pool.map(runModel.run, zip(['lorAtt_%d' % nPoints[n]]*len(wsd), wsd, [args.epochs]*len(wsd), [args.lr]*len(wsd),
                                       [args.nhid]*len(wsd), [args.isl]*len(wsd), [args.save]*len(wsd), [start]*len(wsd)))

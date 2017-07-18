@@ -1,0 +1,11 @@
+  File "main.py", line 72
+    else if nPoints[n] <= 60:
+          ^
+SyntaxError: invalid syntax
+Starting models with 80 points
+0.005
+Finished models with 80 points
+Starting models with 100 points
+0.005
+Finished models with 100 points
+Total runtime was: 2648m 18s

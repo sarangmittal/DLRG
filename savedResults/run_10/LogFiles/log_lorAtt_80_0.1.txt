@@ -1,0 +1,27 @@
+*****************************************************************************
+Starting Model with nPoints = 80 and weight standard deviation = 0.1
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.02654 and validation loss 0.02268
+4380m 52s
+Finished epoch [2 / 100]  with training loss 0.021 and validation loss 0.01825
+4388m 45s
+Finished epoch [3 / 100]  with training loss 0.0197 and validation loss 0.02236
+4396m 20s
+Finished epoch [4 / 100]  with training loss 0.01774 and validation loss 0.01471
+4404m 7s
+Finished epoch [5 / 100]  with training loss 0.0299 and validation loss 0.02612
+4411m 50s
+Finished epoch [6 / 100]  with training loss 0.02352 and validation loss 0.02047
+4419m 17s
+Finished epoch [7 / 100]  with training loss 0.01906 and validation loss 0.01675
+4427m 4s
+Finished epoch [8 / 100]  with training loss 0.01791 and validation loss 0.01616
+4435m 2s
+Finished epoch [9 / 100]  with training loss nan and validation loss nan
+4442m 53s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 80 and weight standard deviation = 0.1
+*****************************************************************************

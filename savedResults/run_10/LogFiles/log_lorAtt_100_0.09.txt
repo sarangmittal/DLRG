@@ -1,0 +1,43 @@
+*****************************************************************************
+Starting Model with nPoints = 100 and weight standard deviation = 0.09
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.02956 and validation loss 0.02652
+5121m 53s
+Finished epoch [2 / 100]  with training loss 0.02628 and validation loss 0.02465
+5134m 21s
+Finished epoch [3 / 100]  with training loss 0.02443 and validation loss 0.0225
+5146m 34s
+Finished epoch [4 / 100]  with training loss 0.02624 and validation loss 0.02974
+5158m 48s
+Finished epoch [5 / 100]  with training loss 0.02664 and validation loss 0.02349
+5171m 2s
+Finished epoch [6 / 100]  with training loss 0.02375 and validation loss 0.02216
+5183m 23s
+Finished epoch [7 / 100]  with training loss 0.02236 and validation loss 0.02105
+5195m 42s
+Finished epoch [8 / 100]  with training loss 0.02122 and validation loss 0.0203
+5208m 5s
+Finished epoch [9 / 100]  with training loss 0.02076 and validation loss 0.02054
+5220m 3s
+Finished epoch [10 / 100]  with training loss 0.02441 and validation loss 0.03088
+5232m 11s
+Finished epoch [11 / 100]  with training loss 0.02838 and validation loss 0.02555
+5244m 16s
+Finished epoch [12 / 100]  with training loss 0.02473 and validation loss 0.02256
+5256m 31s
+Finished epoch [13 / 100]  with training loss 0.02263 and validation loss 0.0208
+5268m 45s
+Finished epoch [14 / 100]  with training loss 0.02325 and validation loss 0.02679
+5280m 55s
+Finished epoch [15 / 100]  with training loss 0.02148 and validation loss 0.02634
+5293m 0s
+Finished epoch [16 / 100]  with training loss 0.02433 and validation loss 0.02008
+5305m 16s
+Finished epoch [17 / 100]  with training loss nan and validation loss nan
+5317m 27s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 100 and weight standard deviation = 0.09
+*****************************************************************************

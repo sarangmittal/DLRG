@@ -253,9 +253,10 @@ def run(args):
     
     # Calculate the test loss:
     test_loss = 0
+    testLength = len(test)
     for t in range(len(test)):
         pts, loss = evaluate(test[t], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim)
-        test_loss += loss
+        test_loss += loss/testLength
     logFile.write('************  Test Error is %.4g *********************************************\n' % test_loss)
     logFile.write('*****************************************************************************\n')
     logFile.write('Finished Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))

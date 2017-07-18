@@ -1,0 +1,39 @@
+*****************************************************************************
+Starting Model with nPoints = 80 and weight standard deviation = 0.1
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.03181 and validation loss 0.02706
+781m 22s
+Finished epoch [2 / 100]  with training loss 0.02638 and validation loss 0.0253
+787m 14s
+Finished epoch [3 / 100]  with training loss 0.02454 and validation loss 0.02243
+793m 10s
+Finished epoch [4 / 100]  with training loss 0.02113 and validation loss 0.01988
+799m 30s
+Finished epoch [5 / 100]  with training loss 0.02104 and validation loss 0.02561
+805m 38s
+Finished epoch [6 / 100]  with training loss 0.021 and validation loss 0.02112
+811m 53s
+Finished epoch [7 / 100]  with training loss 0.01743 and validation loss 0.02566
+818m 0s
+Finished epoch [8 / 100]  with training loss 0.01887 and validation loss 0.01638
+824m 3s
+Finished epoch [9 / 100]  with training loss 0.01838 and validation loss 0.0317
+829m 39s
+Finished epoch [10 / 100]  with training loss 0.02632 and validation loss 0.02131
+836m 3s
+Finished epoch [11 / 100]  with training loss 0.01987 and validation loss 0.01804
+842m 11s
+Finished epoch [12 / 100]  with training loss 0.01679 and validation loss 0.01538
+848m 18s
+Finished epoch [13 / 100]  with training loss 0.0134 and validation loss 0.01093
+854m 1s
+Finished epoch [14 / 100]  with training loss 0.0106 and validation loss 0.02181
+860m 18s
+Finished epoch [15 / 100]  with training loss nan and validation loss nan
+866m 43s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 80 and weight standard deviation = 0.1
+*****************************************************************************

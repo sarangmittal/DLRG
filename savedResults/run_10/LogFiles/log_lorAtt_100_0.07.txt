@@ -1,0 +1,41 @@
+*****************************************************************************
+Starting Model with nPoints = 100 and weight standard deviation = 0.07
+*****************************************************************************
+Finished epoch [1 / 100]  with training loss 0.03375 and validation loss 0.031
+4779m 45s
+Finished epoch [2 / 100]  with training loss 0.03059 and validation loss 0.0295
+4792m 20s
+Finished epoch [3 / 100]  with training loss 0.0286 and validation loss 0.02685
+4804m 40s
+Finished epoch [4 / 100]  with training loss 0.02696 and validation loss 0.02583
+4816m 44s
+Finished epoch [5 / 100]  with training loss 0.02595 and validation loss 0.02483
+4828m 50s
+Finished epoch [6 / 100]  with training loss 0.02515 and validation loss 0.02408
+4841m 5s
+Finished epoch [7 / 100]  with training loss 0.0243 and validation loss 0.02326
+4853m 20s
+Finished epoch [8 / 100]  with training loss 0.02346 and validation loss 0.0225
+4865m 37s
+Finished epoch [9 / 100]  with training loss 0.02301 and validation loss 0.023
+4877m 43s
+Finished epoch [10 / 100]  with training loss 0.02461 and validation loss 0.02515
+4889m 44s
+Finished epoch [11 / 100]  with training loss 0.02329 and validation loss 0.02153
+4902m 3s
+Finished epoch [12 / 100]  with training loss 0.02157 and validation loss 0.02034
+4914m 14s
+Finished epoch [13 / 100]  with training loss 0.02223 and validation loss 0.01987
+4926m 29s
+Finished epoch [14 / 100]  with training loss 0.02225 and validation loss 0.03055
+4938m 38s
+Finished epoch [15 / 100]  with training loss 0.02272 and validation loss 0.02205
+4950m 39s
+Finished epoch [16 / 100]  with training loss nan and validation loss nan
+4962m 57s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 100 and weight standard deviation = 0.07
+*****************************************************************************

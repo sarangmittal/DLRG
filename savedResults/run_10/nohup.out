@@ -1,0 +1,26 @@
+  File "main.py", line 42
+    f.write('Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40)
+                                                                                   ^
+SyntaxError: EOL while scanning string literal
+Starting models with 20 points
+0.05
+Finished models with 20 points
+Starting models with 30 points
+0.05
+Finished models with 30 points
+Starting models with 40 points
+0.05
+Finished models with 40 points
+Starting models with 50 points
+0.01
+Finished models with 50 points
+Starting models with 60 points
+0.01
+Finished models with 60 points
+Starting models with 80 points
+0.01
+Finished models with 80 points
+Starting models with 100 points
+0.01
+Finished models with 100 points
+Total runtime was: 5831m 40s
