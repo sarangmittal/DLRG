@@ -1,0 +1,13 @@
+The v1 data has: 
+rho = 28.0
+sigma = 10.0
+beta = 8.0 / 3.0
+nTraj = 10000
+time_step = 0.01
+
+the v2 data has:
+rho = 28.0
+sigma = 10.0
+beta = 8.0 / 3.0
+nTraj = 10000
+time_step = 0.02

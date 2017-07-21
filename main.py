@@ -9,7 +9,7 @@ import time
 
 parser = argparse.ArgumentParser(description='Hyperparameters for RNN training')
 parser.add_argument('--epochs', type=int, default=50, help='Maximum number of epochs')
-parser.add_argument('--customLR', type=bool, default=False, help='Whether or not to use pre-tuned learning rates based on model size')
+parser.add_argument('--autoLR', type=bool, default=False, help='Whether or not to use pre-tuned learning rates based on model size')
 parser.add_argument('--lr', type=float, default=0.01, help='Learning Rate')
 parser.add_argument('--nhid', type=int, default=128, help='Number of hidden features')
 parser.add_argument('--isl', type=int, default=9, help='Number of points to use in training. npoints-isl is the number of points to predict')
@@ -17,10 +17,12 @@ parser.add_argument('--save', type=str, help='Location to store saved results')
 
 args = parser.parse_args()
 
-# nPoints = [10]
+# nPoints = [10,20]
 # wsd = [0.01,0.02]
-nPoints = [60]
-wsd = [0.01]
+nPoints = [20,30,40,50,60,80,100, 120]
+wsd = [0.001, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+nPoints_i = [(nPoints[i],i) for i in range(len(nPoints))]
+wsd_i = [(wsd[i],i) for i in range(len(wsd))]
 
 # Create directories to save to if they don't exist:
 def createDir(path):
@@ -29,6 +31,16 @@ def createDir(path):
     except OSError:
             if not os.path.isdir(path):
                 raise
+
+# Proxy function to unpack tuple and runmodel
+def proxy(param):
+    param = tuple(param)
+    x, epochs, lr, nhid, isl, save, startTime = param
+    pts_info, std_info = x
+    pts_index, pts = pts_info
+    std_index, std = std_info
+    trainLoss, testLoss = runModel.run("lorAtt_%d" % pts, std, epochs, lr, nhid, isl, save, startTime)
+    return pts_index, std_index, trainLoss, testLoss
 
 createDir(args.save)
 createDir('%s/TrajPlots' % args.save)
@@ -40,8 +52,8 @@ with open('%s/info.txt' % args.save, 'w') as f:
     f.write('This is the information file containing the hyperparameters\n')
     f.write('Number of Epochs: %d \n' % args.epochs)
     # f.write('Learning Rate: %f \n' % args.lr)
-    if args.customLR:
-        f.write('Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40 and 0.005 for sequences > 60 \n')
+    if args.autoLR:
+        f.write('Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40 and 0.005 for sequences < 120, 0.001 for >= 120 \n')
     else:
         f.write('Learning Rate: %f \n' % args.lr)
 
@@ -67,27 +79,45 @@ for w in range(len(wsd)):
 start = time.time()
 
 for n in range(len(nPoints)):
-    print("Starting models with %d points" % nPoints[n])
     allTrainError[n + 1][0] = nPoints[n]
     allTestError[n + 1][0] = nPoints[n]
-    if args.customLR:
-        if nPoints[n] <= 40:
-            args.lr = 0.05
-        elif nPoints[n] <= 60:
-            args.lr = 0.01
-        elif nPoints[n] > 60:
-            args.lr = 0.005
-    print(args.lr)
-    nWorkers = min(5, len(wsd))
-    pool = mp.Pool(nWorkers) 
-    temp = pool.map(runModel.run, zip(['lorAtt_%d' % nPoints[n]]*len(wsd), wsd, [args.epochs]*len(wsd), [args.lr]*len(wsd),
-                                      [args.nhid]*len(wsd), [args.isl]*len(wsd), [args.save]*len(wsd), [start]*len(wsd)))
-    pool.close()
-    pool.join()
-    for i in range(len(wsd)):
-        allTrainError[n+1][i+1] = temp[i][0]
-        allTestError[n+1][i+1] = temp[i][1]
-    print("Finished models with %d points" % nPoints[n])
+
+# Prepare collection of model parameters
+nPoints_i = [(i, nPoints[i]) for i in range(len(nPoints))]
+wsd_i = [(i, wsd[i]) for i in range(len(wsd))]
+nModels = len(nPoints)*len(wsd)
+data = [list(a) for a in zip([(i,j) for j in wsd_i for i in nPoints_i], [args.epochs]*nModels, [args.lr]*nModels, [args.nhid]*nModels, 
+           [args.isl]*nModels, [args.save]*nModels, [start]*nModels)]
+# Tune the learning rate if told to do so by command line
+if args.autoLR:
+    for el in data:
+        pts = el[0][0][1]
+        if pts <= 40:
+            el[2] = 0.05
+        elif pts <= 60:
+            el[2] = 0.01
+        elif pts < 120:
+            el[2] = 0.005
+        elif pts >= 120:
+            el[2] = 0.001
+
+#Prepare pool of workers
+# nWorkers = min(nModels,6) # Need to limit number of threads when running on passed-pwn
+nWorkers = nModels # Give each model its own worker on the Titan
+pool = mp.Pool(nWorkers) 
+# Start pool of workers on jobs
+output = pool.map_async(proxy, data).get()
+pool.close()
+pool.join()
+
+#Write output to correct places
+for el in output:
+    x, y, trainLoss, testLoss = el
+    allTrainError[x+1][y+1] = trainLoss
+    allTestError[x+1][y+1] = testLoss
+    
+print(allTrainError)
+print(allTestError)
     
 with open('%s/allTrainLosses.pickle' % args.save, 'wb') as f:
     pickle.dump(allTrainError, f)

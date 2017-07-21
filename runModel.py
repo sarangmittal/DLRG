@@ -116,9 +116,7 @@ def timeSince(since):
     return '%dm %ds' % (m,s)
 
 
-def run(args):
-    # Unpack tuple
-    data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start = args
+def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start):
     # Constants
     use_cuda = torch.cuda.is_available()
     #earlyStoppingCriteria = 10
@@ -179,6 +177,8 @@ def run(args):
         for c in range(len(val)):
             pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim)
             current_loss_val += loss/valLen
+        if (ep % 100):
+            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep, n_epochs,training[0].size()[0], weight_std)
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
@@ -212,6 +212,15 @@ def run(args):
         if math.isnan(all_losses_train[-1]):
             logFile.write("Stopped because loss exploded to NaN and will not converge\n")
             break
+        # Method 3: Stop if Progress < 1. Essentially, stop if the model has converged.
+        strip_length = 5
+        if ((ep >= (strip_length - 1))):
+            last_strip = all_losses_train[-strip_length:]
+            progress = (np.mean(last_strip)/min(last_strip) - 1) * 1000
+            logFile.write("Progress was %.3f\n" % progress)
+            if progress < 1:
+                logFile.write("Stopping early on epoch %d\n" % (ep + 1))
+                break
     
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
 
@@ -262,4 +271,4 @@ def run(args):
     logFile.write('Finished Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
     logFile.write('*****************************************************************************\n')
     logFile.close()
-    return all_losses_train[-1], test_loss # Return the last error of the training
+    return all_losses_train[-1], test_loss # Return the last error of the training and test error

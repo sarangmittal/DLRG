@@ -5,9 +5,10 @@ Number of features in the hidden state: 128
 Number of points that go into encoder: 9 
 The model is a sequence 2 sequence RNN, trained using the MSE Loss function, 
  SGD Optimizer.
-The LeakyReLU non-linearity is applied to the hidden layer (negative slope of 0.01) 
+The LeakyReLU non-linearity is applied (negative slope of 0.01) 
 The range of sequence lengths is:
 10
+20
 The range of standard deviations of the weight init is:
 0.010000
 0.020000
