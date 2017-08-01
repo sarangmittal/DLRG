@@ -25,7 +25,7 @@ class RNN(nn.Module):
         # Modules
         self.i2h = nn.Linear(input_size + hidden_size, hidden_size)
         self.i2o = nn.Linear(input_size + hidden_size, output_size)
-        self.LR = nn.LeakyReLU(0.01)
+        self.activation = nn.LeakyReLU(0.01)
         # Weight Initialization
         for m in self.modules():
                 if isinstance(m, torch.nn.Linear):
@@ -34,8 +34,8 @@ class RNN(nn.Module):
         
     def forward(self, input, hidden):
         combined = torch.cat([input, hidden], 1)
-        combined = self.LR(combined)
         hidden = self.i2h(combined)
+        hidden = self.activation(hidden)
         output = self.i2o(combined)
         return output, hidden
     
@@ -49,29 +49,8 @@ def train(input_batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimi
     loss = 0
     for c in range(batch_size):
         input_traj = input_batch[c]
-        hidden = encoderRNN.initHidden()
-        input_traj = Variable(input_traj) # if use_cuda else Variable(input_circle)
-
-        output_sequence_length = input_traj.size()[0] - input_sequence_length
-
-        encoderOutput = Variable(torch.zeros(input_sequence_length, 1, n_dim)) #if use_cuda else encoderOutput
-        decoderOutput = Variable(torch.zeros(output_sequence_length,1, n_dim)) #if use_cuda else decoderOutput
-
-        # Run the training sequence into the encoder
-        for i in range(input_sequence_length):
-            encoderOutput[i], hidden = encoderRNN(input_traj[i], hidden)
-
-        # Now the last hidden state of the encoder is the first hidden state of the decoder.
-        # For now, let's have the first input be the origin
-        for i in range(output_sequence_length):
-            if (i == 0):
-                dummyState = Variable(torch.zeros(1,n_dim)) # if use_cuda else Variable(torch.zeros(1,n_dim))
-                decoderOutput[i], hidden = decoderRNN(dummyState, hidden)
-            else:
-                decoderOutput[i], hidden = decoderRNN(decoderOutput[i-1], hidden)
-
-        # Loss is calculated only on the decoder output
-        loss += criterion(decoderOutput, input_traj[-(output_sequence_length):]) #.cuda())
+        decoderOutput, singleLoss = evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, True)
+        loss += singleLoss
 
     loss /= batch_size
     loss.backward()
@@ -82,7 +61,7 @@ def train(input_batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimi
     return loss.data[0]
 
 # Function for evaluating on validation and test sets
-def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim):
+def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, full_loss):
     hidden = encoderRNN.initHidden()
     input_traj = Variable(input_traj) # if use_cuda else Variable(circle)    
 
@@ -105,7 +84,11 @@ def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterio
             decoderOutput[i], hidden = decoderRNN(decoderOutput[i-1], hidden)
     
     loss = criterion(decoderOutput, input_traj[-(output_sequence_length):]) #.cuda())
-    return decoderOutput, loss.data[0]
+    if full_loss:
+        return decoderOutput, loss 
+    else:
+        return decoderOutput, loss.data[0]
+
 
 # Keep track on time
 def timeSince(since):
@@ -124,6 +107,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     # Load in data
     with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
         data = pickle.load(f)
+    # data = list(np.load('lorAttData/npy/%s.npy' % (data_string)))
     # Open a file to write output to:
     logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
 
@@ -175,10 +159,10 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
             current_loss_train += loss/n_batches
 
         for c in range(len(val)):
-            pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim)
+            pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
             current_loss_val += loss/valLen
-        if (ep % 100):
-            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep, n_epochs,training[0].size()[0], weight_std)
+        if (ep % 100 == 0):
+            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
@@ -242,7 +226,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     from mpl_toolkits.mplot3d import Axes3D
     testTraj = test[random.randint(0,len(test))]
     start_traj = testTraj.cpu().numpy()
-    points, loss = evaluate(testTraj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim)
+    points, loss = evaluate(testTraj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
     end_traj = points.data.numpy()
 
     fig = plt.figure()
@@ -264,7 +248,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     test_loss = 0
     testLength = len(test)
     for t in range(len(test)):
-        pts, loss = evaluate(test[t], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim)
+        pts, loss = evaluate(test[t], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
         test_loss += loss/testLength
     logFile.write('************  Test Error is %.4g *********************************************\n' % test_loss)
     logFile.write('*****************************************************************************\n')

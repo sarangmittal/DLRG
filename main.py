@@ -12,15 +12,16 @@ parser.add_argument('--epochs', type=int, default=50, help='Maximum number of ep
 parser.add_argument('--autoLR', type=bool, default=False, help='Whether or not to use pre-tuned learning rates based on model size')
 parser.add_argument('--lr', type=float, default=0.01, help='Learning Rate')
 parser.add_argument('--nhid', type=int, default=128, help='Number of hidden features')
-parser.add_argument('--isl', type=int, default=9, help='Number of points to use in training. npoints-isl is the number of points to predict')
+parser.add_argument('--isl', type=float, default=9, help='Number of points to use in training. npoints-isl is the number of points to predict')
+parser.add_argument('--scaledISL', type=bool, default=False, help='If set to true, the isl variable will be interpreted as the percentage of  the total sequence to be used as input')
 parser.add_argument('--save', type=str, help='Location to store saved results')
 
 args = parser.parse_args()
 
-# nPoints = [10,20]
-# wsd = [0.01,0.02]
-nPoints = [20,30,40,50,60,80,100, 120]
-wsd = [0.001, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+nPoints = [20, 40, 80]
+wsd = [0.01, 0.04, 0.07]
+# nPoints = [10,20,30,40,50,60,80,100]
+# wsd = [0.001, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 nPoints_i = [(nPoints[i],i) for i in range(len(nPoints))]
 wsd_i = [(wsd[i],i) for i in range(len(wsd))]
 
@@ -58,9 +59,12 @@ with open('%s/info.txt' % args.save, 'w') as f:
         f.write('Learning Rate: %f \n' % args.lr)
 
     f.write('Number of features in the hidden state: %d \n' % args.nhid)
-    f.write('Number of points that go into encoder: %d \n' % args.isl)
     f.write('The model is a sequence 2 sequence RNN, trained using the MSE Loss function, \n SGD Optimizer.\n')
     f.write('The LeakyReLU non-linearity is applied (negative slope of 0.01) \n')
+    if args.scaledISL:
+        f.write('The encoder takes %f percent of the sequence as input\n' % (args.isl * 100))
+    else:
+        f.write('The encoder takes %d points as input' % args.isl)
     f.write('The range of sequence lengths is:\n')
     for n in nPoints:
         f.write('%d\n' % n)
@@ -100,10 +104,18 @@ if args.autoLR:
             el[2] = 0.005
         elif pts >= 120:
             el[2] = 0.001
+# Tune the input sequence length if required
+if args.scaledISL:
+    if args.isl >= 1:
+        raise SystemExit("Percentage of sequence as input is >= 1")
+    for el in data:
+        pts = el[0][0][1]
+        el[4] = int(pts*args.isl)
+        print(el[4])
 
 #Prepare pool of workers
-# nWorkers = min(nModels,6) # Need to limit number of threads when running on passed-pwn
-nWorkers = nModels # Give each model its own worker on the Titan
+nWorkers = min(nModels,6) # Need to limit number of threads when running on passed-pwn
+# nWorkers = nModels # Give each model its own worker on the Titan
 pool = mp.Pool(nWorkers) 
 # Start pool of workers on jobs
 output = pool.map_async(proxy, data).get()
