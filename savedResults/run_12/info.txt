@@ -1,0 +1,17 @@
+This is the information file containing the hyperparameters
+Number of Epochs: 50 
+Learning rate is 0.05 for sequences <= 40, and 0.01 for sequences > 40 and 0.005 for sequences < 120, 0.001 for >= 120 
+Number of features in the hidden state: 128 
+The model is a sequence 2 sequence RNN, trained using the MSE Loss function, 
+ SGD Optimizer.
+The LeakyReLU non-linearity is applied (negative slope of 0.01) 
+The encoder takes 40.0000 percent of the sequence as input
+The range of sequence lengths is:
+20
+40
+80
+The range of standard deviations of the weight init is:
+0.010000
+0.040000
+0.070000
+Code written by Sarang Mittal (Caltech), using the Pytorch API

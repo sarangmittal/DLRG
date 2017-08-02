@@ -1,0 +1,154 @@
+*****************************************************************************
+Starting Model with nPoints = 40 and weight standard deviation = 0.07
+*****************************************************************************
+Finished epoch [1 / 50]  with training loss 0.0304 and validation loss 0.02914
+78m 39s
+Finished epoch [2 / 50]  with training loss 0.02323 and validation loss 0.01271
+81m 25s
+Finished epoch [3 / 50]  with training loss 0.01072 and validation loss 0.006397
+84m 16s
+Finished epoch [4 / 50]  with training loss 0.00589 and validation loss 0.003272
+87m 9s
+Finished epoch [5 / 50]  with training loss 0.003681 and validation loss 0.001938
+89m 45s
+Progress was 3016.150
+Finished epoch [6 / 50]  with training loss 0.002512 and validation loss 0.001377
+92m 25s
+Progress was 2664.958
+Finished epoch [7 / 50]  with training loss 0.001815 and validation loss 0.0009159
+95m 20s
+Progress was 1712.479
+Finished epoch [8 / 50]  with training loss 0.0014 and validation loss 0.0005968
+98m 7s
+Progress was 1185.186
+Finished epoch [9 / 50]  with training loss 0.001096 and validation loss 0.00059
+100m 56s
+Progress was 916.523
+Finished epoch [10 / 50]  with training loss 0.0009815 and validation loss 0.0004147
+103m 47s
+Progress was 590.400
+Finished epoch [11 / 50]  with training loss 0.0007758 and validation loss 0.00034
+106m 29s
+Progress was 564.525
+Finished epoch [12 / 50]  with training loss 0.0006303 and validation loss 0.0002868
+109m 7s
+Progress was 549.692
+Finished epoch [13 / 50]  with training loss 0.000576 and validation loss 0.0002707
+111m 55s
+Progress was 409.636
+Finished epoch [14 / 50]  with training loss 0.0004944 and validation loss 0.0002723
+114m 33s
+Progress was 398.898
+Finished epoch [15 / 50]  with training loss 0.0004375 and validation loss 0.000273
+117m 19s
+Progress was 332.238
+Finished epoch [16 / 50]  with training loss 0.0003814 and validation loss 0.0002161
+120m 20s
+Progress was 321.109
+Finished epoch [17 / 50]  with training loss 0.0003659 and validation loss 0.0002081
+123m 9s
+Progress was 232.572
+Finished epoch [18 / 50]  with training loss 0.000336 and validation loss 0.0001955
+126m 14s
+Progress was 199.425
+Finished epoch [19 / 50]  with training loss 0.0003052 and validation loss 0.0001887
+129m 21s
+Progress was 196.679
+Finished epoch [20 / 50]  with training loss 0.0003097 and validation loss 0.0001754
+132m 3s
+Progress was 112.924
+Finished epoch [21 / 50]  with training loss 0.0002897 and validation loss 0.0001766
+134m 56s
+Progress was 109.231
+Finished epoch [22 / 50]  with training loss 0.0002795 and validation loss 0.0002985
+137m 54s
+Progress was 87.739
+Finished epoch [23 / 50]  with training loss 0.0002558 and validation loss 0.0001724
+140m 46s
+Progress was 125.604
+Finished epoch [24 / 50]  with training loss 0.0002486 and validation loss 0.0002035
+143m 37s
+Progress was 112.951
+Finished epoch [25 / 50]  with training loss 0.0002312 and validation loss 0.0001469
+146m 31s
+Progress was 128.707
+Finished epoch [26 / 50]  with training loss 0.000219 and validation loss 0.0001471
+149m 9s
+Progress was 127.018
+Finished epoch [27 / 50]  with training loss 0.0002094 and validation loss 0.0001375
+151m 42s
+Progress was 111.889
+Finished epoch [28 / 50]  with training loss 0.0002014 and validation loss 0.0001255
+153m 49s
+Progress was 101.689
+Finished epoch [29 / 50]  with training loss 0.0001878 and validation loss 0.000128
+156m 7s
+Progress was 116.897
+Finished epoch [30 / 50]  with training loss 0.000187 and validation loss 0.0001075
+158m 29s
+Progress was 74.311
+Finished epoch [31 / 50]  with training loss 0.0001789 and validation loss 9.801e-05
+160m 32s
+Progress was 78.486
+Finished epoch [32 / 50]  with training loss 0.000176 and validation loss 9.623e-05
+162m 44s
+Progress was 57.999
+Finished epoch [33 / 50]  with training loss 0.0001673 and validation loss 9.51e-05
+164m 45s
+Progress was 72.195
+Finished epoch [34 / 50]  with training loss 0.00016 and validation loss 9.057e-05
+166m 50s
+Progress was 86.784
+Finished epoch [35 / 50]  with training loss 0.0001549 and validation loss 9.142e-05
+169m 4s
+Progress was 80.677
+Finished epoch [36 / 50]  with training loss 0.0001451 and validation loss 8.893e-05
+171m 10s
+Progress was 107.311
+Finished epoch [37 / 50]  with training loss 0.0001371 and validation loss 8.742e-05
+173m 9s
+Progress was 115.221
+Finished epoch [38 / 50]  with training loss 0.0001338 and validation loss 8.47e-05
+175m 28s
+Progress was 92.421
+Finished epoch [39 / 50]  with training loss 0.0001294 and validation loss 8.246e-05
+177m 25s
+Progress was 82.380
+Finished epoch [40 / 50]  with training loss 0.0001243 and validation loss 7.862e-05
+179m 27s
+Progress was 77.266
+Finished epoch [41 / 50]  with training loss 0.0001245 and validation loss 7.468e-05
+181m 41s
+Progress was 44.136
+Finished epoch [42 / 50]  with training loss 0.0001196 and validation loss 7.186e-05
+183m 48s
+Progress was 55.950
+Finished epoch [43 / 50]  with training loss 0.0001162 and validation loss 7.055e-05
+185m 57s
+Progress was 56.646
+Finished epoch [44 / 50]  with training loss 0.0001164 and validation loss 6.407e-05
+188m 3s
+Progress was 34.347
+Finished epoch [45 / 50]  with training loss 0.000115 and validation loss 6.403e-05
+190m 13s
+Progress was 29.466
+Finished epoch [46 / 50]  with training loss 0.0001074 and validation loss 6.129e-05
+192m 35s
+Progress was 70.303
+Finished epoch [47 / 50]  with training loss 0.0001067 and validation loss 5.99e-05
+194m 41s
+Progress was 52.932
+Finished epoch [48 / 50]  with training loss 0.0001027 and validation loss 5.919e-05
+196m 49s
+Progress was 67.268
+Finished epoch [49 / 50]  with training loss 0.0001007 and validation loss 5.622e-05
+199m 0s
+Progress was 57.597
+Finished epoch [50 / 50]  with training loss 0.0001017 and validation loss 5.289e-05
+201m 4s
+Progress was 31.323
+************  Train Error is 0.0001017   ******************************************
+************  Test Error is 5.911e-05 *********************************************
+*****************************************************************************
+Finished Model with nPoints = 40 and weight standard deviation = 0.07
+*****************************************************************************

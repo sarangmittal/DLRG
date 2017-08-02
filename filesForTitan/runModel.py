@@ -14,9 +14,10 @@ import time
 import copy
 
 class RNN(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, weight_std):
+    def __init__(self, input_size, hidden_size, output_size, weight_std, use_cuda):
         super(RNN, self).__init__()
         # Initialization constants
+        self.use_cuda = use_cuda
         self.weight_std = weight_std
         self.weight_mean = 0.0
         self.bias_mean = 0.0
@@ -40,16 +41,16 @@ class RNN(nn.Module):
         return output, hidden
     
     def initHidden(self):
-        return Variable(torch.zeros(1,self.hidden_size)) #.cuda() # if use_cuda else Variable(torch.zeros(1,self.hidden_size))
+        return Variable(torch.zeros(1,self.hidden_size).pin_memory()).cuda() if self.use_cuda else Variable(torch.zeros(1,self.hidden_size))
 
 # Function to train model
-def train(input_batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer, input_sequence_length, criterion, n_dim, batch_size):
+def train(input_batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer, input_sequence_length, criterion, n_dim, batch_size, use_cuda):
     encoder_optimizer.zero_grad()
     decoder_optimizer.zero_grad()
     loss = 0
     for c in range(batch_size):
         input_traj = input_batch[c]
-        decoderOutput, singleLoss = evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, True)
+        decoderOutput, singleLoss = evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, True, use_cuda)
         loss += singleLoss
 
     loss /= batch_size
@@ -61,14 +62,18 @@ def train(input_batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimi
     return loss.data[0]
 
 # Function for evaluating on validation and test sets
-def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, full_loss):
+def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, full_loss, use_cuda):
     hidden = encoderRNN.initHidden()
-    input_traj = Variable(input_traj) # if use_cuda else Variable(circle)    
+    input_traj = Variable(input_traj).cuda() if use_cuda else Variable(input_traj)    
 
     output_sequence_length = input_traj.size()[0] - input_sequence_length
     
-    encoderOutput = Variable(torch.zeros(input_sequence_length, 1, n_dim)) #if use_cuda else encoderOutput
-    decoderOutput = Variable(torch.zeros(output_sequence_length,1, n_dim)) #if use_cuda else decoderOutput
+    encoderOutput = Variable(torch.zeros(input_sequence_length, 1, n_dim).pin_memory())
+    decoderOutput = Variable(torch.zeros(output_sequence_length,1, n_dim).pin_memory()) 
+    
+    if use_cuda:
+        encoderOutput = encoderOutput.cuda()
+        decoderOutput = decoderOutput.cuda()
     
     # Run the point sequence into the encoder
     for i in range(input_sequence_length):
@@ -78,12 +83,14 @@ def evaluate(input_traj, encoderRNN, decoderRNN, input_sequence_length, criterio
     # For now, let's have the first input be the origin
     for i in range(output_sequence_length):
         if (i == 0):
-            dummyState = Variable(torch.zeros(1,n_dim)) # if use_cuda else Variable(torch.zeros(1,n_dim))
+            dummyState = Variable(torch.zeros(1,n_dim).pin_memory().cuda()) if use_cuda else Variable(torch.zeros(1,n_dim))
             decoderOutput[i], hidden = decoderRNN(dummyState, hidden)
         else:
             decoderOutput[i], hidden = decoderRNN(decoderOutput[i-1], hidden)
+            
+    target = input_traj[-(output_sequence_length):].cuda() if use_cuda else input_traj[-(output_sequence_length):]
     
-    loss = criterion(decoderOutput, input_traj[-(output_sequence_length):]) #.cuda())
+    loss = criterion(decoderOutput, target)
     if full_loss:
         return decoderOutput, loss 
     else:
@@ -99,9 +106,8 @@ def timeSince(since):
     return '%dm %ds' % (m,s)
 
 
-def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start):
+def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda):
     # Constants
-    use_cuda = torch.cuda.is_available()
     #earlyStoppingCriteria = 10
     batch_size = 4
     # Load in data
@@ -120,19 +126,24 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     
     # Convert data to torch tensors
     for i in range(len(training)):
-        training[i] = torch.FloatTensor(training[i])
+        training[i] = torch.cuda.FloatTensor(training[i]) if use_cuda else torch.FloatTensor(training[i])
     for i in range(len(val)):
-        val[i] = torch.FloatTensor(val[i])
+        val[i] = torch.cuda.FloatTensor(val[i]) if use_cuda else torch.FloatTensor(val[i])
     for i in range(len(test)):
-        test[i] = torch.FloatTensor(test[i])
+        test[i] = torch.cuda.FloatTensor(test[i]) if use_cuda else torch.FloatTensor(test[i])
         
     # Create the model
     n_dim = training[0].size()[2]
 
-    encoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std)
-    decoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std)
+    encoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
+    decoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
     
     criterion = nn.MSELoss(size_average = True)
+    
+    if use_cuda:
+        encoderRNN = encoderRNN.cuda()
+        decoderRNN = decoderRNN.cuda()
+        criterion = criterion.cuda()
 
     encoder_optimizer = optim.SGD(encoderRNN.parameters(), lr = learning_rate)
     decoder_optimizer = optim.SGD(decoderRNN.parameters(), lr = learning_rate)
@@ -155,14 +166,15 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         for i in range(n_batches):
             batch = training[i*batch_size:((i+1)*batch_size)]
             loss = train(batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer, 
-                         input_sequence_length, criterion, n_dim, batch_size)
+                         input_sequence_length, criterion, n_dim, batch_size, use_cuda)
             current_loss_train += loss/n_batches
 
         for c in range(len(val)):
-            pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
+            pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False, use_cuda)
             current_loss_val += loss/valLen
         if (ep % 100 == 0):
             print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
+            print("Time elapsed: %s" % timeSince(start))
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
@@ -226,8 +238,8 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     from mpl_toolkits.mplot3d import Axes3D
     testTraj = test[random.randint(0,len(test))]
     start_traj = testTraj.cpu().numpy()
-    points, loss = evaluate(testTraj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
-    end_traj = points.data.numpy()
+    points, loss = evaluate(testTraj, encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False,use_cuda)
+    end_traj = points.cpu().data.numpy()
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -248,7 +260,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     test_loss = 0
     testLength = len(test)
     for t in range(len(test)):
-        pts, loss = evaluate(test[t], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
+        pts, loss = evaluate(test[t], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False, use_cuda)
         test_loss += loss/testLength
     logFile.write('************  Test Error is %.4g *********************************************\n' % test_loss)
     logFile.write('*****************************************************************************\n')

@@ -15,6 +15,7 @@ parser.add_argument('--nhid', type=int, default=128, help='Number of hidden feat
 parser.add_argument('--isl', type=float, default=9, help='Number of points to use in training. npoints-isl is the number of points to predict')
 parser.add_argument('--scaledISL', type=bool, default=False, help='If set to true, the isl variable will be interpreted as the percentage of  the total sequence to be used as input')
 parser.add_argument('--save', default='savedResults/test', type=str, help='Location to store saved results')
+parser.add_argument('--gpu', action='store_true', help='Use GPU?')
 
 args = parser.parse_args()
 
@@ -49,7 +50,7 @@ if args.scaledISL:
         print(args.isl)
 # Run Model:
 start = time.time()
-trainLoss, testLoss = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start)
+trainLoss, testLoss = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu)
 print("Total runtime was: %s" % (runModel.timeSince(start)))
 print(args.nPoints, args.wsd, trainLoss, testLoss)
 np.save('%s/loss_%d_%0.3f.npy' % (args.save, args.nPoints, args.wsd), [args.nPoints, args.wsd, trainLoss, testLoss])
