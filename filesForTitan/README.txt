@@ -25,3 +25,7 @@ To run a single model:
 
 python single.py [Number of points in the sequence] [Standard deviation of weights] --epochs [number of epochs] --autoLR True --save [File name to save to]
 The runSingle.sh file contains how to run all the models from shell.
+
+To use checkpointing, enable the --cp flag. This will save a checkpoint for every epoch of the model to the location -> --save/checkpoints.
+To resume a training, set the --resume flag to the file location of the checkpoint. Be careful to ensure the loaded checkpoint as the same
+hyperparameters (mainly number of points and standard deviation of the weights).
