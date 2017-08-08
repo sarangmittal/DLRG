@@ -106,7 +106,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     batch_size = 4
     # Load in data
     with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
-        data = pickle.load(f)
+        data = list(pickle.load(f))
     # data = list(np.load('lorAttData/npy/%s.npy' % (data_string)))
     # Open a file to write output to:
     logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')

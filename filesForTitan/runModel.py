@@ -12,6 +12,7 @@ import random
 import math
 import time
 import copy
+import os
 
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, weight_std, use_cuda):
@@ -105,8 +106,7 @@ def timeSince(since):
     s -= m * 60
     return '%dm %ds' % (m,s)
 
-
-def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda):
+def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp, resume):
     # Constants
     #earlyStoppingCriteria = 10
     batch_size = 4
@@ -115,7 +115,10 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     #     data = pickle.load(f)
     data = list(np.load('lorAttData/%s.npy' % data_string)) # Convert to list because torch.FloatTensor doesn't like np arrays.
     # Open a file to write output to:
-    logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
+    if resume:
+        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'a+')
+    else:
+        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
 
     # Partition Data into Training, Validation, and Test sets (80/10/10)
     random.seed(12345) # Comment out to get a different split every time
@@ -134,7 +137,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         
     # Create the model
     n_dim = training[0].size()[2]
-
+    
     encoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
     decoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
     
@@ -155,26 +158,47 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     all_losses_val = []
     trainLen = len(training)
     valLen = len(val)
+    start_epoch = 0
+    
+    #Optionally load from checkpoint
+    if resume:
+        if os.path.isfile(resume):
+            print("=> loading checkpoint '{}'".format(resume))
+            checkpoint = torch.load(resume)
+            start_epoch = checkpoint['epoch']
+            encoderRNN.load_state_dict(checkpoint['encoder'])
+            decoderRNN.load_state_dict(checkpoint['decoder'])
+            encoder_optimizer.load_state_dict(checkpoint['encoder_optimizer'])
+            decoder_optimizer.load_state_dict(checkpoint['decoder_optimizer'])
+            all_losses_train = checkpoint['training_loss']
+            all_losses_val = checkpoint['val_loss']
+            print("=> loaded checkpoint '{}' (epoch {})"
+                  .format(resume, checkpoint['epoch']))
+        else:
+            print("=> no checkpoint found at '{}'".format(resume))
+    
+
     
     # Start Training
     logFile.write('*****************************************************************************\n')
     logFile.write('Starting Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
     logFile.write('*****************************************************************************\n')
     
-    for ep in range(n_epochs):
+    for ep in range(start_epoch, n_epochs):
         n_batches = len(training)/batch_size
+        # Run all batches
         for i in range(n_batches):
             batch = training[i*batch_size:((i+1)*batch_size)]
             loss = train(batch, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer, 
                          input_sequence_length, criterion, n_dim, batch_size, use_cuda)
             current_loss_train += loss/n_batches
-
+        # Evalualte on validation set
         for c in range(len(val)):
             pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False, use_cuda)
             current_loss_val += loss/valLen
-        if (ep % 100 == 0):
-            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
-            print("Time elapsed: %s" % timeSince(start))
+        # if (ep % 100 == 0):
+        #     print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
+        #     print("Time elapsed: %s" % timeSince(start))
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
@@ -202,6 +226,19 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         current_loss_train = 0
         all_losses_val.append(current_loss_val)
         current_loss_val = 0
+        
+        # Optionally Save a checkpoint at each epoch
+        if cp:
+            state = {'epoch': ep + 1,
+                     'encoder': encoderRNN.state_dict(),
+                     'decoder': decoderRNN.state_dict(),
+                     'encoder_optimizer': encoder_optimizer.state_dict(),
+                     'decoder_optimizer': decoder_optimizer.state_dict(),
+                     'training_loss': all_losses_train,
+                     'val_loss': all_losses_val}
+            torch.save(state, '%s/checkpoints/%s_%.3g_epoch_%d.tar' % (save_location, data_string, weight_std, ep + 1))
+        
+        
         logFile.write("Finished epoch [%d / %d]  with training loss %.4g and validation loss %.4g\n" 
               % (ep + 1, n_epochs, all_losses_train[ep], all_losses_val[ep]))
         logFile.write(timeSince(start) + "\n")
