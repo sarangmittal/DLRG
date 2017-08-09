@@ -106,7 +106,7 @@ def timeSince(since):
     s -= m * 60
     return '%dm %ds' % (m,s)
 
-def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp, resume):
+def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp):
     # Constants
     #earlyStoppingCriteria = 10
     batch_size = 4
@@ -115,7 +115,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     #     data = pickle.load(f)
     data = list(np.load('lorAttData/%s.npy' % data_string)) # Convert to list because torch.FloatTensor doesn't like np arrays.
     # Open a file to write output to:
-    if resume:
+    if cp:
         logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'a+')
     else:
         logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
@@ -160,12 +160,17 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     valLen = len(val)
     start_epoch = 0
     
-    #Optionally load from checkpoint
-    if resume:
+    #Optionally load from checkpoint. Try to search for the checkpoint at the file location created by this code
+    if cp:
+        resume = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std)
         if os.path.isfile(resume):
             print("=> loading checkpoint '{}'".format(resume))
             checkpoint = torch.load(resume)
             start_epoch = checkpoint['epoch']
+            if start_epoch > n_epochs:
+                print('Checkpoint being loaded is on an epoch after the desired number of epochs')
+                print('Stopping execution')
+                return (0,0)
             encoderRNN.load_state_dict(checkpoint['encoder'])
             decoderRNN.load_state_dict(checkpoint['decoder'])
             encoder_optimizer.load_state_dict(checkpoint['encoder_optimizer'])
@@ -176,6 +181,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
                   .format(resume, checkpoint['epoch']))
         else:
             print("=> no checkpoint found at '{}'".format(resume))
+            print('Starting New Model, with checkpoint stored at %s' % resume)
     
 
     
@@ -236,7 +242,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
                      'decoder_optimizer': decoder_optimizer.state_dict(),
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
-            torch.save(state, '%s/checkpoints/%s_%.3g_epoch_%d.tar' % (save_location, data_string, weight_std, ep + 1))
+            torch.save(state, '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std))
         
         
         logFile.write("Finished epoch [%d / %d]  with training loss %.4g and validation loss %.4g\n" 

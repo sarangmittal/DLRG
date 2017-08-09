@@ -16,8 +16,7 @@ parser.add_argument('--isl', type=float, default=9, help='Number of points to us
 parser.add_argument('--scaledISL', type=bool, default=False, help='If set to true, the isl variable will be interpreted as the percentage of  the total sequence to be used as input')
 parser.add_argument('--save', default='savedResults/test', type=str, help='Location to store saved results')
 parser.add_argument('--gpu', action='store_true', help='Use GPU?')
-parser.add_argument('--resume', default='', type=str, help='Path to model from which to resume training')
-parser.add_argument('--cp', action='store_true', help='Enable Checkpointing')
+parser.add_argument('--cp', action='store_true', help='Enable Checkpointing. Will try to look for a checkpoint to load from.')
 
 args = parser.parse_args()
 # Create directories to save to if they don't exist:
@@ -52,7 +51,7 @@ if args.scaledISL:
         print(args.isl)
 # Run Model:
 start = time.time()
-trainLoss, testLoss = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp, args.resume)
+trainLoss, testLoss = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
 print("Total runtime was: %s" % (runModel.timeSince(start)))
 print(args.nPoints, args.wsd, trainLoss, testLoss)
 np.save('%s/loss_%d_%0.3f.npy' % (args.save, args.nPoints, args.wsd), [args.nPoints, args.wsd, trainLoss, testLoss])
