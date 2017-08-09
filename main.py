@@ -18,8 +18,8 @@ parser.add_argument('--save', type=str, help='Location to store saved results')
 
 args = parser.parse_args()
 
-nPoints = [20, 40, 80]
-wsd = [0.01, 0.04, 0.07]
+nPoints = [10, 20, 30, 40, 50, 60, 80]
+wsd = [0.01,0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 # nPoints = [10,20,30,40,50,60,80,100]
 # wsd = [0.001, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 nPoints_i = [(nPoints[i],i) for i in range(len(nPoints))]
@@ -68,7 +68,7 @@ with open('%s/info.txt' % args.save, 'w') as f:
     f.write('The range of sequence lengths is:\n')
     for n in nPoints:
         f.write('%d\n' % n)
-    f.write('The range of standard deviations of the weight init is:\n')
+    f.write('The weights are initialized with sigma_w^2/N_h. The range of sigma_w is:\n')
     for w in wsd:
         f.write('%f\n' % w)
     f.write('Code written by Sarang Mittal (Caltech), using the Pytorch API')

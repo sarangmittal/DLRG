@@ -1,0 +1,19 @@
+*****************************************************************************
+Starting Model with nPoints = 10 and weight standard deviation = 2.5
+*****************************************************************************
+Finished epoch [1 / 5]  with training loss 0.02308 and validation loss 0.0006383
+0m 30s
+Finished epoch [2 / 5]  with training loss 0.0005226 and validation loss 0.0003965
+0m 55s
+Finished epoch [3 / 5]  with training loss 0.0003088 and validation loss 0.0002755
+1m 19s
+Finished epoch [4 / 5]  with training loss 0.0002209 and validation loss 0.0002018
+1m 44s
+Finished epoch [5 / 5]  with training loss 0.000172 and validation loss 0.0001558
+2m 9s
+Progress was 27269.846
+************  Train Error is 0.000172   ******************************************
+************  Test Error is 0.0001485 *********************************************
+*****************************************************************************
+Finished Model with nPoints = 10 and weight standard deviation = 2.5
+*****************************************************************************

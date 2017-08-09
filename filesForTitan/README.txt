@@ -13,13 +13,6 @@ matplotlib (2.0.2)
 random
 
 To run experiment, open a terminal, cd into the file where the tarball was unpacked, and type:
-(There will be no output, as it is all appended to the nohup.out file that is created. All data is saved into a file named by the command line argument, --save)
-
-nohup python main.py --save 'titanRun1' --epochs 500 --autoLR True &
-
-To run a test to make sure the environment and code is setup correctly (should take ~ 5 min):
-
-python test.py --save 'test' --epochs 5 
 
 To run a single model:
 

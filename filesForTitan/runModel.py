@@ -27,7 +27,8 @@ class RNN(nn.Module):
         # Modules
         self.i2h = nn.Linear(input_size + hidden_size, hidden_size)
         self.i2o = nn.Linear(input_size + hidden_size, output_size)
-        self.activation = nn.LeakyReLU(0.01)
+        # self.activation = nn.LeakyReLU(0.01)
+        self.activation = nn.Tanh()
         # Weight Initialization
         for m in self.modules():
                 if isinstance(m, torch.nn.Linear):
@@ -110,6 +111,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     # Constants
     #earlyStoppingCriteria = 10
     batch_size = 4
+    wsd = np.sqrt(weight_std**2/hidden_features)
     # Load in data
     # with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
     #     data = pickle.load(f)
@@ -138,8 +140,8 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     # Create the model
     n_dim = training[0].size()[2]
     
-    encoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
-    decoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std, use_cuda)
+    encoderRNN = RNN(n_dim, hidden_features, n_dim, wsd, use_cuda)
+    decoderRNN = RNN(n_dim, hidden_features, n_dim, wsd, use_cuda)
     
     criterion = nn.MSELoss(size_average = True)
     

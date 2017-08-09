@@ -104,6 +104,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     use_cuda = torch.cuda.is_available()
     #earlyStoppingCriteria = 10
     batch_size = 4
+    wsd = np.sqrt(weight_std**2/hidden_features)
     # Load in data
     with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
         data = list(pickle.load(f))
