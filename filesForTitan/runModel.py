@@ -13,6 +13,7 @@ import math
 import time
 import copy
 import os
+import sys
 
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, weight_std, use_cuda):
@@ -169,10 +170,9 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
             print("=> loading checkpoint '{}'".format(resume))
             checkpoint = torch.load(resume)
             start_epoch = checkpoint['epoch']
-            if start_epoch > n_epochs:
-                print('Checkpoint being loaded is on an epoch after the desired number of epochs')
-                print('Stopping execution')
-                return (0,0)
+            if start_epoch >= n_epochs:
+                print("Invalid Start Epoch")
+                sys.exit(123)
             encoderRNN.load_state_dict(checkpoint['encoder'])
             decoderRNN.load_state_dict(checkpoint['decoder'])
             encoder_optimizer.load_state_dict(checkpoint['encoder_optimizer'])
