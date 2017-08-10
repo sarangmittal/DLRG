@@ -4,7 +4,7 @@
 #PBS -N test_mpi
 #PBS -j oe
 ####PBS -q debug
-#PBS -l walltime=140:00,nodes=40
+#PBS -l walltime=120:00,nodes=40
 #    End PBS directives and begin shell commands
 
 cd $MEMBERWORK/hep107
