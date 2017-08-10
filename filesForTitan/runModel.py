@@ -206,6 +206,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         for c in range(len(val)):
             pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False, use_cuda)
             current_loss_val += loss/valLen
+
         if (ep % 1 == 0):
             print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
             print("Time elapsed: %s" % timeSince(start))
