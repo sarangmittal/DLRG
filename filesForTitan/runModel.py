@@ -148,8 +148,6 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
     # Partition Data into Training, Validation, and Test sets (80/10/10)
     random.seed(12345) # Comment out to get a different split every time
     random.shuffle(data)
-    i_1 = (len(data)/10 * 8)
-    i_2 = (len(data)/10 * 9)
     training = data[:int(len(data)/10 * 8)]
     val = data[int(len(data)/10 * 8):int(len(data)/10 * 9)]
     test = data[int(len(data)/10 * 9):]
@@ -232,7 +230,6 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
         if (ep % 1 == 0):
             print("Finished epoch [%d / %d] on model with %d points and variance %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_var))
             print("Time elapsed: %s" % timeSince(start))
-
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
