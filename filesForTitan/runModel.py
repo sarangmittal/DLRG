@@ -126,9 +126,11 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     # Partition Data into Training, Validation, and Test sets (80/10/10)
     random.seed(12345) # Comment out to get a different split every time
     random.shuffle(data)
-    training = data[:(len(data)/10 * 8)]
-    val = data[(len(data)/10 * 8):(len(data)/10 * 9)]
-    test = data[(len(data)/10 * 9):]
+    i_1 = (len(data)/10 * 8)
+    i_2 = (len(data)/10 * 9)
+    training = data[:int(len(data)/10 * 8)]
+    val = data[int(len(data)/10 * 8):int(len(data)/10 * 9)]
+    test = data[int(len(data)/10 * 9):]
     
     # Convert data to torch tensors
     for i in range(len(training)):
@@ -193,7 +195,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     logFile.write('*****************************************************************************\n')
     
     for ep in range(start_epoch, n_epochs):
-        n_batches = len(training)/batch_size
+        n_batches = int(len(training)/batch_size)
         # Run all batches
         for i in range(n_batches):
             batch = training[i*batch_size:((i+1)*batch_size)]
@@ -204,9 +206,11 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         for c in range(len(val)):
             pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False, use_cuda)
             current_loss_val += loss/valLen
-        # if (ep % 100 == 0):
-        #     print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
-        #     print("Time elapsed: %s" % timeSince(start))
+
+        if (ep % 1 == 0):
+            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
+            print("Time elapsed: %s" % timeSince(start))
+
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
