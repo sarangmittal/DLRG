@@ -61,7 +61,6 @@ if rank == 0:
                 tasks.remove( a_task )
                 comm.send(a_task, dest=source, tag=START)
                 print("Sending task %d to worker %d"% (a_task, source))
-                time.sleep(10)
         elif tag == DONE:
             result = data
             print("Got data from worker %d" % source)
