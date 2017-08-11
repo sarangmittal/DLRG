@@ -108,11 +108,25 @@ def timeSince(since):
     s -= m * 60
     return '%dm %ds' % (m,s)
 
+# Plot and save losses
+def plotLosses(all_losses_train, all_losses_val, data_string, weight_std, save_location):
+    #plt.figure()
+    plt.plot(all_losses_train, 'r', label="Training Loss")
+    plt.plot(all_losses_val, 'b', label="Validation Loss")
+    plt.xlabel('Epoch')
+    plt.ylabel('MSE Loss (log scale)')
+    plt.yscale('log')
+    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weight_std))
+    plt.legend()
+    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
+    plt.close()
+
 def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp):
     # Constants
     #earlyStoppingCriteria = 10
     batch_size = 4
     wsd = np.sqrt(weight_std**2/hidden_features)
+    stop_training = False #Used to indicate to parent function to stop this model
     # Load in data
     # with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
     #     data = pickle.load(f)
@@ -238,6 +252,26 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         current_loss_train = 0
         all_losses_val.append(current_loss_val)
         current_loss_val = 0
+    
+        
+        
+        logFile.write("Finished epoch [%d / %d]  with training loss %.4g and validation loss %.4g\n" 
+              % (ep + 1, n_epochs, all_losses_train[ep], all_losses_val[ep]))
+        logFile.write(timeSince(start) + "\n")
+        if math.isnan(all_losses_train[-1]):
+            logFile.write("Stopped because loss exploded to NaN and will not converge\n")
+            stop_training = True
+            break
+        # Method 3: Stop if Progress < 1. Essentially, stop if the model has converged.
+        strip_length = 5
+        if ((ep >= (strip_length - 1))):
+            last_strip = all_losses_train[-strip_length:]
+            progress = (np.mean(last_strip)/min(last_strip) - 1) * 1000
+            logFile.write("Progress was %.3f\n" % progress)
+            if progress < 1:
+                logFile.write("Stopping early on epoch %d\n" % (ep + 1))
+                stop_training = True
+                break
         
         # Optionally Save a checkpoint at each epoch
         if cp:
@@ -249,39 +283,13 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
             torch.save(state, '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std))
-        
-        
-        logFile.write("Finished epoch [%d / %d]  with training loss %.4g and validation loss %.4g\n" 
-              % (ep + 1, n_epochs, all_losses_train[ep], all_losses_val[ep]))
-        logFile.write(timeSince(start) + "\n")
-        if math.isnan(all_losses_train[-1]):
-            logFile.write("Stopped because loss exploded to NaN and will not converge\n")
-            break
-        # Method 3: Stop if Progress < 1. Essentially, stop if the model has converged.
-        strip_length = 5
-        if ((ep >= (strip_length - 1))):
-            last_strip = all_losses_train[-strip_length:]
-            progress = (np.mean(last_strip)/min(last_strip) - 1) * 1000
-            logFile.write("Progress was %.3f\n" % progress)
-            if progress < 1:
-                logFile.write("Stopping early on epoch %d\n" % (ep + 1))
-                break
-    
+            
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
 
 
     
     # Plot and save training and validation loss
-    #plt.figure()
-    plt.plot(all_losses_train, 'r', label="Training Loss")
-    plt.plot(all_losses_val, 'b', label="Validation Loss")
-    plt.xlabel('Epoch')
-    plt.ylabel('MSE Loss (log scale)')
-    plt.yscale('log')
-    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weight_std))
-    plt.legend()
-    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
-    plt.close()
+    plotLosses(all_losses_train, all_losses_val, data_string, weight_std, save_location)
     
     # Plot model output on an example circle and save
     from mpl_toolkits.mplot3d import Axes3D
@@ -316,4 +324,4 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     logFile.write('Finished Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
     logFile.write('*****************************************************************************\n')
     logFile.close()
-    return all_losses_train[-1], test_loss # Return the last error of the training and test error
+    return all_losses_train[-1], test_loss, stop_training # Return the last error of the training and test error. Also return stop_training

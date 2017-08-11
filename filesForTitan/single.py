@@ -4,6 +4,7 @@ import numpy as np
 import argparse
 import os
 import time
+import sys
 
 parser = argparse.ArgumentParser(description='Hyperparameters for RNN training')
 parser.add_argument('nPoints', type=int, help='Number of points in the trajectory (required)')
@@ -51,10 +52,13 @@ if args.scaledISL:
         print(args.isl)
 # Run Model:
 start = time.time()
-trainLoss, testLoss = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
+trainLoss, testLoss, stopped_early = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
+
 print("Total runtime was: %s" % (runModel.timeSince(start)))
 print(args.nPoints, args.wsd, trainLoss, testLoss)
 np.save('%s/loss_%d_%0.3f.npy' % (args.save, args.nPoints, args.wsd), [args.nPoints, args.wsd, trainLoss, testLoss])
+if stopped_early:
+    sys.exit(123) #Indicates to Jean-Roch's code that there is no need to return to this model
 try:
     os.rename('nohup.out', args.save + '/nohup.out')
 except OSError:
