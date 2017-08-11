@@ -257,8 +257,7 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
         current_loss_train = 0
         all_losses_val.append(current_loss_val)
         current_loss_val = 0
-    
-        
+
         
         logFile.write("Finished epoch [%d / %d]  with training loss %.4g and validation loss %.4g\n" 
               % (ep + 1, n_epochs, all_losses_train[ep], all_losses_val[ep]))
@@ -288,7 +287,6 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
             torch.save(state, '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_var))
-            
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
 
 
