@@ -21,7 +21,7 @@ stds = map(float, sys.argv[2].split(','))
 epoch = int(sys.argv[3])
 
 
-dir='titanRun'
+dir='titanMpiRun'
 
 use_gpu = False
 
@@ -64,23 +64,24 @@ if rank == 0:
             if not tasks:
                 ## we have to assume that there is more overall tasks than workers
                 comm.send(None, dest=source, tag=EXIT)
-                print ("No more task left, idling worker %d"% source)
+                print ("No more task left, idling worker %d at %s"%( source, time.asctime(time.localtime())))
+
             else:
                 a_task = random.choice( tasks )
                 executing.append( a_task )
                 tasks.remove( a_task )
                 comm.send(a_task, dest=source, tag=START)
-                print("Sending task %d to worker %d"% (a_task, source))
+                print("Sending task %d to worker %d at %s"% (a_task, source, time.asctime(time.localtime())))
         elif tag == DONE:
             result = int(data)
-            print("Got data from worker %d" % source)
+            print("Got data from worker %d at %s" %( source, time.asctime(time.localtime())))
             tasks.append( result )
             executing.remove( result )
         elif tag == NOTRAIN:
             result = data
-            print ("Worker %d considers %d as done"%(source , result))
+            print ("Worker %d considers %d as done at %s"%(source , result,time.asctime(time.localtime())))
         elif tag == EXIT:
-            print("Worker %d exited." % source)
+            print("Worker %d exited at %s" % (source,time.asctime(time.localtime())))
             closed_workers += 1
 
     print("Master finishing")
