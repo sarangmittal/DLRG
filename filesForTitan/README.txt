@@ -23,9 +23,9 @@ To use checkpointing, enable the --cp flag. This will save a checkpoint for last
 To resume a training, set the --cp flag and the code looks for checkpoints created by this code.
 
 The optional arguments desired are:
---epochs 500 --autoLR True --nhid 128 --isl 9 --save 'titanRun1' --cp
+--epochs 500 --autoLR True --nhid 256 --isl 9 --save 'titanRun1' --cp
 (you might want to try running solely on the CPU, as I saw better performance on the CPU rather than the GPU)
 # Points in Sequence:
 [10 20 30 40 50 60 80 100 120]
 Weight var:
-[0.1 0.3 0.5 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5]
+[0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6]
