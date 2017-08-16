@@ -99,18 +99,18 @@ def timeSince(since):
     return '%dm %ds' % (m,s)
 
 
-def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start):
+def run(data_string, weigh_var, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start):
     # Constants
     use_cuda = torch.cuda.is_available()
     #earlyStoppingCriteria = 10
     batch_size = 4
-    wsd = np.sqrt(weight_std**2/hidden_features)
+    wsd = np.sqrt(weigh_var/hidden_features)
     # Load in data
     with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
         data = list(pickle.load(f))
     # data = list(np.load('lorAttData/npy/%s.npy' % (data_string)))
     # Open a file to write output to:
-    logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
+    logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weigh_var), 'w')
 
     # Partition Data into Training, Validation, and Test sets (80/10/10)
     random.seed(12345) # Comment out to get a different split every time
@@ -130,8 +130,8 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     # Create the model
     n_dim = training[0].size()[2]
 
-    encoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std)
-    decoderRNN = RNN(n_dim, hidden_features, n_dim, weight_std)
+    encoderRNN = RNN(n_dim, hidden_features, n_dim, weigh_var)
+    decoderRNN = RNN(n_dim, hidden_features, n_dim, weigh_var)
     
     criterion = nn.MSELoss(size_average = True)
 
@@ -148,7 +148,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     
     # Start Training
     logFile.write('*****************************************************************************\n')
-    logFile.write('Starting Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
+    logFile.write('Starting Model with nPoints = %d and weight variance = %.3g\n' % (training[0].size()[0], weigh_var))
     logFile.write('*****************************************************************************\n')
     
     for ep in range(n_epochs):
@@ -163,7 +163,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
             pts, loss = evaluate(val[c], encoderRNN, decoderRNN, input_sequence_length, criterion, n_dim, False)
             current_loss_val += loss/valLen
         if (ep % 100 == 0):
-            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
+            print("Finished epoch [%d / %d] on model with %d points and variance %.3f" % (ep + 1, n_epochs,training[0].size()[0], weigh_var))
             
         #Early Stopping
         # Don't need Early Stopping, as we are trying to show trainability
@@ -218,9 +218,9 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     plt.xlabel('Epoch')
     plt.ylabel('MSE Loss (log scale)')
     plt.yscale('log')
-    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weight_std))
+    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weigh_var))
     plt.legend()
-    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
+    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weigh_var))
     plt.close()
     
     # Plot model output on an example circle and save
@@ -236,14 +236,14 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     ax.plot(start_traj[:,0,0], start_traj[:,0,1], start_traj[:,0,2], 'r', label='Ground Truth')
     ax.plot(end_traj[:,0,0], end_traj[:,0,1], end_traj[:,0,2], 'b.', label='Predictions')
     plt.legend()
-    plt.title("Model Prediction on Example from %s and Weight sigma = %.3g" %(data_string, weight_std))
+    plt.title("Model Prediction on Example from %s and Weight sigma = %.3g" %(data_string, weigh_var))
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.savefig('%s/TrajPlots/vis_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
+    plt.savefig('%s/TrajPlots/vis_data_%s_wsd_%.3g.png' % (save_location, data_string, weigh_var))
     plt.close()
     # Save the model
-    torch.save(encoderRNN.state_dict(), '%s/TrajModel/%s_encoder_wsd_%.3g' % (save_location, data_string, weight_std))
-    torch.save(decoderRNN.state_dict(), '%s/TrajModel/%s_decoder_wsd_%.3g' % (save_location, data_string, weight_std))
+    torch.save(encoderRNN.state_dict(), '%s/TrajModel/%s_encoder_wsd_%.3g' % (save_location, data_string, weigh_var))
+    torch.save(decoderRNN.state_dict(), '%s/TrajModel/%s_decoder_wsd_%.3g' % (save_location, data_string, weigh_var))
     
     # Calculate the test loss:
     test_loss = 0
@@ -253,7 +253,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         test_loss += loss/testLength
     logFile.write('************  Test Error is %.4g *********************************************\n' % test_loss)
     logFile.write('*****************************************************************************\n')
-    logFile.write('Finished Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
+    logFile.write('Finished Model with nPoints = %d and weight variance = %.3g\n' % (training[0].size()[0], weigh_var))
     logFile.write('*****************************************************************************\n')
     logFile.close()
     return all_losses_train[-1], test_loss # Return the last error of the training and test error

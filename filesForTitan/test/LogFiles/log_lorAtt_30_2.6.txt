@@ -1,0 +1,11 @@
+*****************************************************************************
+Starting Model with nPoints = 30 and weight standard deviation = 2.6
+*****************************************************************************
+Finished epoch [1 / 5]  with training loss nan and validation loss nan
+2m 33s
+Stopped because loss exploded to NaN and will not converge
+************  Train Error is nan   ******************************************
+************  Test Error is nan *********************************************
+*****************************************************************************
+Finished Model with nPoints = 30 and weight standard deviation = 2.6
+*****************************************************************************

@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
+from torch.multiprocessing import Pool
 from torch import optim
 from torch.nn import init
 import matplotlib
@@ -21,6 +22,7 @@ class RNN(nn.Module):
         # Initialization constants
         self.use_cuda = use_cuda
         self.weight_std = weight_std
+        print(self.weight_std)
         self.weight_mean = 0.0
         self.bias_mean = 0.0
         self.bias_std = math.sqrt(0.05)
@@ -109,23 +111,29 @@ def timeSince(since):
     return '%dm %ds' % (m,s)
 
 # Plot and save losses
-def plotLosses(all_losses_train, all_losses_val, data_string, weight_std, save_location):
+def plotLosses(all_losses_train, all_losses_val, data_string, weight_var, save_location):
     #plt.figure()
     plt.plot(all_losses_train, 'r', label="Training Loss")
     plt.plot(all_losses_val, 'b', label="Validation Loss")
     plt.xlabel('Epoch')
     plt.ylabel('MSE Loss (log scale)')
     plt.yscale('log')
-    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weight_std))
+    plt.title('Loss over Epochs on %s set with Weight sigma = %.3g ' % (data_string, weight_var))
     plt.legend()
-    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
+    plt.savefig('%s/TrajPlots/loss_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_var))
     plt.close()
+    
+def proxy(args):
+    traj, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer,input_sequence_length, criterion, \
+    n_dim, batch_size, use_cuda = args
+    return train(traj, encoderRNN, decoderRNN, encoder_optimizer, decoder_optimizer, input_sequence_length, \
+                 criterion, n_dim, batch_size, use_cuda)
 
-def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp):
+def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input_sequence_length, save_location, start, use_cuda, cp):
     # Constants
     #earlyStoppingCriteria = 10
     batch_size = 4
-    wsd = np.sqrt(weight_std**2/hidden_features)
+    wsd = np.sqrt(weight_var/hidden_features)
     stop_training = False #Used to indicate to parent function to stop this model
     # Load in data
     # with open('lorAttData/%s.pickle' % (data_string), 'rb') as f:
@@ -133,9 +141,9 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     data = list(np.load('lorAttData/%s.npy' % data_string)) # Convert to list because torch.FloatTensor doesn't like np arrays.
     # Open a file to write output to:
     if cp:
-        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'a+')
+        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_var), 'a+')
     else:
-        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_std), 'w')
+        logFile = open('%s/LogFiles/log_%s_%.3g.txt' % (save_location, data_string, weight_var), 'w')
 
     # Partition Data into Training, Validation, and Test sets (80/10/10)
     random.seed(12345) # Comment out to get a different split every time
@@ -181,7 +189,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     
     #Optionally load from checkpoint. Try to search for the checkpoint at the file location created by this code
     if cp:
-        resume = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std)
+        resume = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_var)
         if os.path.isfile(resume):
             print("=> loading checkpoint '{}'".format(resume))
             checkpoint = torch.load(resume)
@@ -205,7 +213,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     
     # Start Training
     logFile.write('*****************************************************************************\n')
-    logFile.write('Starting Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
+    logFile.write('Starting Model with nPoints = %d and weight variance = %.3g\n' % (training[0].size()[0], weight_var))
     logFile.write('*****************************************************************************\n')
     
     for ep in range(start_epoch, n_epochs):
@@ -222,7 +230,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
             current_loss_val += loss/valLen
 
         if (ep % 1 == 0):
-            print("Finished epoch [%d / %d] on model with %d points and std. dev. %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_std))
+            print("Finished epoch [%d / %d] on model with %d points and variance %.3f" % (ep + 1, n_epochs,training[0].size()[0], weight_var))
             print("Time elapsed: %s" % timeSince(start))
 
             
@@ -282,14 +290,14 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
                      'decoder_optimizer': decoder_optimizer.state_dict(),
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
-            torch.save(state, '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std))
+            torch.save(state, '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_var))
             
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
 
 
     
     # Plot and save training and validation loss
-    plotLosses(all_losses_train, all_losses_val, data_string, weight_std, save_location)
+    plotLosses(all_losses_train, all_losses_val, data_string, weight_var, save_location)
     
     # Plot model output on an example circle and save
     from mpl_toolkits.mplot3d import Axes3D
@@ -304,14 +312,14 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
     ax.plot(start_traj[:,0,0], start_traj[:,0,1], start_traj[:,0,2], 'r', label='Ground Truth')
     ax.plot(end_traj[:,0,0], end_traj[:,0,1], end_traj[:,0,2], 'b.', label='Predictions')
     plt.legend()
-    plt.title("Model Prediction on Example from %s and Weight sigma = %.3g" %(data_string, weight_std))
+    plt.title("Model Prediction on Example from %s and Weight sigma = %.3g" %(data_string, weight_var))
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.savefig('%s/TrajPlots/vis_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_std))
+    plt.savefig('%s/TrajPlots/vis_data_%s_wsd_%.3g.png' % (save_location, data_string, weight_var))
     plt.close()
     # Save the model
-    torch.save(encoderRNN.state_dict(), '%s/TrajModel/%s_encoder_wsd_%.3g' % (save_location, data_string, weight_std))
-    torch.save(decoderRNN.state_dict(), '%s/TrajModel/%s_decoder_wsd_%.3g' % (save_location, data_string, weight_std))
+    torch.save(encoderRNN.state_dict(), '%s/TrajModel/%s_encoder_wsd_%.3g' % (save_location, data_string, weight_var))
+    torch.save(decoderRNN.state_dict(), '%s/TrajModel/%s_decoder_wsd_%.3g' % (save_location, data_string, weight_var))
     
     # Calculate the test loss:
     test_loss = 0
@@ -321,7 +329,7 @@ def run(data_string, weight_std, n_epochs, learning_rate, hidden_features, input
         test_loss += loss/testLength
     logFile.write('************  Test Error is %.4g *********************************************\n' % test_loss)
     logFile.write('*****************************************************************************\n')
-    logFile.write('Finished Model with nPoints = %d and weight standard deviation = %.3g\n' % (training[0].size()[0], weight_std))
+    logFile.write('Finished Model with nPoints = %d and weight variance = %.3g\n' % (training[0].size()[0], weight_var))
     logFile.write('*****************************************************************************\n')
     logFile.close()
     return all_losses_train[-1], test_loss, stop_training # Return the last error of the training and test error. Also return stop_training

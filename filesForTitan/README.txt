@@ -27,7 +27,5 @@ The optional arguments desired are:
 (you might want to try running solely on the CPU, as I saw better performance on the CPU rather than the GPU)
 # Points in Sequence:
 [10 20 30 40 50 60 80 100 120]
-Weight std:
-[1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0 3.2 3.4 3.6]
-
-(120 Total Models)
+Weight var:
+[0.1 0.3 0.5 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5]

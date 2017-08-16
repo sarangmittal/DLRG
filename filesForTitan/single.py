@@ -8,7 +8,7 @@ import sys
 
 parser = argparse.ArgumentParser(description='Hyperparameters for RNN training')
 parser.add_argument('nPoints', type=int, help='Number of points in the trajectory (required)')
-parser.add_argument('wsd', type=float, help='Standard deviation used to initialized the weight matrix')
+parser.add_argument('wvar', type=float, help='sigma_w^2. Weights are initialized with variance sigma_w^2/N_h')
 parser.add_argument('--epochs', type=int, default=50, help='Maximum number of epochs')
 parser.add_argument('--autoLR', type=bool, default=False, help='Whether or not to use pre-tuned learning rates based on model size')
 parser.add_argument('--lr', type=float, default=0.01, help='Learning Rate')
@@ -52,11 +52,11 @@ if args.scaledISL:
         print(args.isl)
 # Run Model:
 start = time.time()
-trainLoss, testLoss, stopped_early = runModel.run("lorAtt_%d" % args.nPoints, args.wsd, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
+trainLoss, testLoss, stopped_early = runModel.run("lorAtt_%d" % args.nPoints, args.wvar, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
 
 print("Total runtime was: %s" % (runModel.timeSince(start)))
-print(args.nPoints, args.wsd, trainLoss, testLoss)
-np.save('%s/loss_%d_%0.3f.npy' % (args.save, args.nPoints, args.wsd), [args.nPoints, args.wsd, trainLoss, testLoss])
+print(args.nPoints, args.wvar, trainLoss, testLoss)
+np.save('%s/loss_%d_%0.3f.npy' % (args.save, args.nPoints, args.wvar), [args.nPoints, args.wvar, trainLoss, testLoss])
 if stopped_early:
     sys.exit(123) #Indicates to Jean-Roch's code that there is no need to return to this model
 try:

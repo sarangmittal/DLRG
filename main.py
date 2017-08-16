@@ -19,11 +19,11 @@ parser.add_argument('--save', type=str, help='Location to store saved results')
 args = parser.parse_args()
 
 nPoints = [10, 20, 30, 40, 50, 60, 80]
-wsd = [0.01,0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+wvar = [0.1, 1.2]
 # nPoints = [10,20,30,40,50,60,80,100]
 # wsd = [0.001, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 nPoints_i = [(nPoints[i],i) for i in range(len(nPoints))]
-wsd_i = [(wsd[i],i) for i in range(len(wsd))]
+wvar_i = [(wvar[i],i) for i in range(len(wvar))]
 
 # Create directories to save to if they don't exist:
 def createDir(path):
@@ -37,10 +37,10 @@ def createDir(path):
 def proxy(param):
     param = tuple(param)
     x, epochs, lr, nhid, isl, save, startTime = param
-    pts_info, std_info = x
+    pts_info, var_info = x
     pts_index, pts = pts_info
-    std_index, std = std_info
-    trainLoss, testLoss = runModel.run("lorAtt_%d" % pts, std, epochs, lr, nhid, isl, save, startTime)
+    std_index, var = var_info
+    trainLoss, testLoss = runModel.run("lorAtt_%d" % pts, var, epochs, lr, nhid, isl, save, startTime)
     return pts_index, std_index, trainLoss, testLoss
 
 createDir(args.save)
@@ -68,18 +68,18 @@ with open('%s/info.txt' % args.save, 'w') as f:
     f.write('The range of sequence lengths is:\n')
     for n in nPoints:
         f.write('%d\n' % n)
-    f.write('The weights are initialized with sigma_w^2/N_h. The range of sigma_w is:\n')
-    for w in wsd:
+    f.write('The weights are initialized with sigma_w^2/N_h. The range of sigma_w^2 is:\n')
+    for w in wvar:
         f.write('%f\n' % w)
     f.write('Code written by Sarang Mittal (Caltech), using the Pytorch API')
     f.close()
 
-allTrainError = np.zeros((len(nPoints) + 1, len(wsd) + 1))
-allTestError = np.zeros((len(nPoints) + 1, len(wsd) + 1))
+allTrainError = np.zeros((len(nPoints) + 1, len(wvar) + 1))
+allTestError = np.zeros((len(nPoints) + 1, len(wvar) + 1))
 # The matrix will have labels of the number of points and sigma squared
-for w in range(len(wsd)):
-    allTrainError[0][w+1] = wsd[w]
-    allTestError[0][w+1] = wsd[w]
+for w in range(len(wvar)):
+    allTrainError[0][w+1] = wvar[w]
+    allTestError[0][w+1] = wvar[w]
 start = time.time()
 
 for n in range(len(nPoints)):
@@ -88,9 +88,9 @@ for n in range(len(nPoints)):
 
 # Prepare collection of model parameters
 nPoints_i = [(i, nPoints[i]) for i in range(len(nPoints))]
-wsd_i = [(i, wsd[i]) for i in range(len(wsd))]
-nModels = len(nPoints)*len(wsd)
-data = [list(a) for a in zip([(i,j) for j in wsd_i for i in nPoints_i], [args.epochs]*nModels, [args.lr]*nModels, [args.nhid]*nModels, 
+wvar_i = [(i, wvar[i]) for i in range(len(wvar))]
+nModels = len(nPoints)*len(wvar)
+data = [list(a) for a in zip([(i,j) for j in wvar_i for i in nPoints_i], [args.epochs]*nModels, [args.lr]*nModels, [args.nhid]*nModels, 
            [args.isl]*nModels, [args.save]*nModels, [start]*nModels)]
 # Tune the learning rate if told to do so by command line
 if args.autoLR:
