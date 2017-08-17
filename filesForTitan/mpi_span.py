@@ -6,7 +6,7 @@ import time
 import sys
 
 ptss = map(int,sys.argv[1].split(','))
-stds = map(float, sys.argv[2].split(','))
+vars = map(float, sys.argv[2].split(','))
 epoch = int(sys.argv[3])
 
 
@@ -14,7 +14,7 @@ dir='titanMpiRun_Aug16'
 
 use_gpu = False
 
-combinations = list(itertools.product(ptss, stds))
+combinations = list(itertools.product(ptss, vars))
 print (len(combinations))
 print (combinations[0])
 
@@ -86,10 +86,10 @@ else:
         if tag == START:
             print ("Received index",task,"to operate on")
             # Do the work here
-            pts, std = combinations[int(task)]
-            com = "python single.py %s %s --epochs %d --autoLR True --save '%s' %s --cp --nhid 128 --isl 9 "%( 
+            pts, var = combinations[int(task)]
+            com = "python single.py %s %s --epochs %d --autoLR True --save '%s' %s --cp --nhid 256 --isl 9 "%( 
                 pts, 
-                std, 
+                var, 
                 epoch, 
                 dir ,
                 '--gpu' if use_gpu else '')

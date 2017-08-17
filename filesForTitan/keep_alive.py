@@ -4,12 +4,10 @@ import time
 
 n_workers = 40
 ptss = [ 10, 20, 30, 40, 50, 60, 80, 100, 120]
-stds = [
-    1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6
-    ]
+vars = [ 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6 ]
 epoch=100
 
-n_tasks = len( ptss) * len(stds)
+n_tasks = len( ptss) * len(vars)
 print (n_tasks,"tasks to run, with",n_workers,"workers")
 if n_workers > n_tasks:
     sys.exit( 10 )
@@ -44,7 +42,7 @@ aprun -n {1:d} -N 1 python mpi_span.py {2} {3} {4:d}
         walltime, 
         n_workers,
         ','.join( map(str,ptss) ),
-        ','.join( map(str,stds) ),
+        ','.join( map(str,vars) ),
         epoch
         ))
 
