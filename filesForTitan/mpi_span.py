@@ -107,14 +107,4 @@ else:
 
 
 
-"""
-if comm.rank< len(combinations):
-    pts, std = combinations[comm.rank]
-    com = "python single.py %s %s --epochs %d --autoLR True --save '%s' %s"%( pts, std, epoch, dir ,'--gpu' if use_gpu else '')
-    print ("Will execute the command",com)
-    ##os.system(com)
-else:
-    print ('nothing for me to do')
-"""
-
 comm.Barrier() # wait for everybody to synchronize _here_
