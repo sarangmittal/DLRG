@@ -286,7 +286,7 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
                      'decoder_optimizer': decoder_optimizer.state_dict(),
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
-            checkpoint_file = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_std)
+            checkpoint_file = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_var)
             torch.save(state, checkpoint_file )
             print ("=> saved checkpoint at '{}'".format( checkpoint_file))            
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
