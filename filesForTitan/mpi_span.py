@@ -5,23 +5,12 @@ import glob
 import time
 import sys
 
-"""
->>>>>>> tweak on mpi driver
-ptss = [ 10, 20, 30, 40, 50, 60, 80, 100, 120]
-stds = [
-    0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1,
-    0.5, 
-    1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6
-    ]
-
-epoch=100
-"""
 ptss = map(int,sys.argv[1].split(','))
 stds = map(float, sys.argv[2].split(','))
 epoch = int(sys.argv[3])
 
 
-dir='titanMpiRun'
+dir='titanMpiRun_Aug16'
 
 use_gpu = False
 
