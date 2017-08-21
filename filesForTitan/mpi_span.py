@@ -10,7 +10,9 @@ vars = map(float, sys.argv[2].split(','))
 epoch = int(sys.argv[3])
 
 
-dir='titanMpiRun_Aug16'
+dir='titanMpiRun_Aug21'
+if len(sys.argv)>4:
+    dir = sys.argv[4]
 
 use_gpu = False
 

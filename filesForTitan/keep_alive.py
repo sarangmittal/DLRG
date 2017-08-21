@@ -2,10 +2,11 @@ import os
 import sys
 import time
 
-n_workers = 40
+n_workers = 50
 ptss = [ 10, 20, 30, 40, 50, 60, 80, 100, 120]
 vars = [ 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6 ]
-epoch=100
+epoch=500
+dir= 'titanMpiRun_Aug21'
 
 n_tasks = len( ptss) * len(vars)
 print (n_tasks,"tasks to run, with",n_workers,"workers")
@@ -37,13 +38,14 @@ module load python_mpi4py
 
 cd /lustre/atlas/proj-shared/hep107/DLRG/filesForTitan/
 date
-aprun -n {1:d} -N 1 python mpi_span.py {2} {3} {4:d} 
+aprun -n {1:d} -N 1 python mpi_span.py {2} {3} {4:d} {5}
 """.format(
         walltime, 
         n_workers,
         ','.join( map(str,ptss) ),
         ','.join( map(str,vars) ),
-        epoch
+        epoch,
+        dir
         ))
 
 mpi_file.close()
