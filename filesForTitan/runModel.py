@@ -287,7 +287,10 @@ def run(data_string, weight_var, n_epochs, learning_rate, hidden_features, input
                      'training_loss': all_losses_train,
                      'val_loss': all_losses_val}
             checkpoint_file = '%s/checkpoints/%s_%.3g_checkpoint.tar' % (save_location, data_string, weight_var)
-            torch.save(state, checkpoint_file )
+            print ("=> saving checkpoint at '{}'".format( checkpoint_file))            
+            torch.save(state, checkpoint_file+'.part' )
+            print ("=> created checkpoint at '{}'".format( checkpoint_file+'.part'))            
+            os.system('mv %s %s'%(checkpoint_file+'.part', checkpoint_file))
             print ("=> saved checkpoint at '{}'".format( checkpoint_file))            
     logFile.write('************  Train Error is %.4g   ******************************************\n' % all_losses_train[-1])
 
