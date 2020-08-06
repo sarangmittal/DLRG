@@ -50,6 +50,8 @@ if args.scaledISL:
     for el in data:
         args.isl = int(nPoints*args.isl)
         print(args.isl)
+
+args.isl = int(args.isl)
 # Run Model:
 start = time.time()
 trainLoss, testLoss, stopped_early = runModel.run("lorAtt_%d" % args.nPoints, args.wvar, args.epochs, args.lr, args.nhid, args.isl, args.save, start, args.gpu, args.cp)
